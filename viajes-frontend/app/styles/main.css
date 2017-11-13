@@ -10,10 +10,6 @@ body {
   background-image: url("../images/digital-marketing.jpg");
 }
 
-html, body {
-    height: 100%;
-}
-
 /* Custom page header */
 .header {
   margin-bottom: 10px;
@@ -98,8 +94,6 @@ html, body {
 
 .btn-form {
     width: 150px;
-    margin-top: 20px;
-    width: 190px;
 }
 
 .one-row-form {
@@ -144,4 +138,36 @@ html, body {
     float: left;
     padding-right: 10px;
     padding-top: 10px;
+}
+
+.resultado-container, .panel {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.search-form label {
+    color: #31708f;
+}
+
+.resultado-single {
+    margin-left: 0px;
+}
+
+.precio-container {
+    margin-bottom: 15px;
+}
+
+.precio-font {
+    font-weight: bolder;
+    font-size: xx-large;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.disponibilidad-auto {
+    margin-top: 10px;
+    font-size: small;
+    font-style: italic;
 }

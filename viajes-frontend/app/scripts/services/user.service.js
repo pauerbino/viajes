@@ -1,5 +1,5 @@
 'use strict';
-angular.module('iaw2017App')
+angular.module('viajesApp')
     .service('UserService', ['$http', '$q', '$rootScope', '$window', 'Configuration', function ($http, $q, $rootScope, $window, Configuration) {
         var service = {};
 

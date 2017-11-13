@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name iaw2017App
+ * @name viajesApp
  * @description
- * # iaw2017App
+ * # viajesApp
  *
  * Main module of the application.
  */
 angular
-  .module('iaw2017App', [
+  .module('viajesApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
@@ -19,44 +19,14 @@ angular
   ])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/lists', {
-        templateUrl: 'views/lists.html',
-        controller: 'ListsCtrl',
-        controllerAs: 'vm'
-      })
-      .when('/newList', {
-        templateUrl: 'views/newList.html',
-        controller: 'NewListCtrl',
-        controllerAs: 'vm'
-      })
-      .when('/newContact', {
-        templateUrl: 'views/newContact.html',
-        controller: 'NewContactCtrl',
-        controllerAs: 'vm'
-      })
-      .when('/contactList/:id', {
-        templateUrl: 'views/contactList.html',
-        controller: 'ContactListCtrl',
-        controllerAs: 'vm'
-      })
-      .when('/myContacts', {
-        templateUrl: 'views/myContacts.html',
-        controller: 'MyContactsCtrl',
+      .when('/busquedaAuto', {
+        templateUrl: 'views/busquedaAuto.html',
+        controller: 'BusquedaAutoCtrl',
         controllerAs: 'vm'
       })
       .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
-        controllerAs: 'vm'
-      })
-      .when('/newCampaign', {
-        templateUrl: 'views/newCampaign.html',
-        controller: 'NewCampaignCtrl',
-        controllerAs: 'vm'
-      })
-      .when('/myCampaigns', {
-        templateUrl: 'views/myCampaigns.html',
-        controller: 'MyCampaignsCtrl',
         controllerAs: 'vm'
       })
       .when('/signin', {
@@ -69,29 +39,9 @@ angular
         controller: 'HomeCtrl',
         controllerAs: 'vm'
       })
-      .when('/editCampaign/:id', {
-        templateUrl: 'views/editCampaign.html',
-        controller: 'EditCampaignCtrl',
-        controllerAs: 'vm'
-      })
-      .when('/editContact/:id', {
-        templateUrl: 'views/editContact.html',
-        controller: 'EditContactCtrl',
-        controllerAs: 'vm'
-      })
-      .when('/editList/:id', {
-        templateUrl: 'views/editList.html',
-        controller: 'EditListCtrl',
-        controllerAs: 'vm'
-      })
       .when('/logOut', {
         templateUrl: 'views/home.html',
         controller: 'LogOutCtrl',
-        controllerAs: 'vm'
-      })
-    .when('/bePremium', {
-        templateUrl: 'views/bePremium.html',
-        controller: 'BePremiumCtrl',
         controllerAs: 'vm'
       })
       .otherwise({

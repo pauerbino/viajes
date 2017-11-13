@@ -1,5 +1,5 @@
 'use strict';
-angular.module('iaw2017App')
+angular.module('viajesApp')
   .controller('ListsCtrl', ['$location', '$scope', 'ListService', function ( $location, $scope, ListService) {
 
     $scope.lists = [];
