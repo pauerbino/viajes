@@ -35,6 +35,7 @@ router.post('/', function(req, res, next) {
 
   user.save(function(err) {
     if (err) throw err;
+    console.log("creando token");
     var token;
     token = user.generateJwt();
     res.json({
