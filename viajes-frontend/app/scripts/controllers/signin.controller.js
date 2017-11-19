@@ -1,5 +1,5 @@
 'use strict';
-angular.module('iaw2017App')
+angular.module('viajesApp')
   .controller('SigninCtrl', ['$location', '$scope', 'UserService', function ($location, $scope, UserService) {
 
     $scope.credentials = {

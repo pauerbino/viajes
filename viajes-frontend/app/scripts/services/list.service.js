@@ -1,5 +1,5 @@
 'use strict';
-angular.module('iaw2017App')
+angular.module('viajesApp')
     .service('ListService', ['$http', '$q', 'Configuration', function ($http, $q, Configuration) {
         var service = {};
         var cache = {

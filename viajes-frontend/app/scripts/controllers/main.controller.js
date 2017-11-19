@@ -1,5 +1,5 @@
 'use strict';
-angular.module('iaw2017App')
+angular.module('viajesApp')
   .controller('MainCtrl', ['$rootScope','$scope', 'UserService',
     function ($rootScope, $scope, UserService) {
 
