@@ -12,14 +12,14 @@ angular.module('viajesApp')
             };
         };
 
-        service.getAutos = function() {
+        service.getAutos = function(retiro, devolucion) {
             var deferred = $q.defer();
             if (cache.autos) {
                 deferred.resolve(cache.autos);
             } else {
                 $http({
                     method: 'GET',
-                    url: Configuration.getConfiguration().baseURL + '/autos'
+                    url: Configuration.getConfiguration().baseURL + '/autos/'+ retiro +'/'+ devolucion
                 }).then(function (response) {
                     cache.autos = response.data;
                     deferred.resolve(response.data);

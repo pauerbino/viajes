@@ -5,13 +5,8 @@ angular.module('viajesApp')
     $scope.autos = [];
     $scope.busqueda = {};
     $scope.ciudades = [];
-    // $scope.ciudades = [
-    //                     { nombre:"Buenos Aires", pais: "Argentina"},
-    //                     { nombre:"Nueva York", pais: "Estados Unidos"},
-    //                     { nombre:"Paris", pais: "Francia"}
-    //                 ];
-
     $scope.ciudad = {};
+    $scope.resultadoBusqueda = [];
 
     function initialize() {
         CiudadService.getCiudades().then(function(response){
@@ -21,7 +16,18 @@ angular.module('viajesApp')
 
     initialize();
 
+    $scope.buscar = function() {
+        $scope.resultadoBusqueda = [];
+        AutoService.reset();
+        if (($scope.busqueda.lugarRetiro) && ($scope.busqueda.lugarDevolucion)){
+            AutoService.getAutos($scope.busqueda.lugarRetiro._id, $scope.busqueda.lugarDevolucion._id).then(function(response){
+                $scope.resultadoBusqueda = response;
+            });
+        }
+    };
+
     $scope.agregarAlCarrito = function() {
+
 
     };
 
