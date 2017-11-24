@@ -25,7 +25,12 @@ angular
         controller: 'BusquedaAutoCtrl',
         controllerAs: 'vm'
       })
-      .when('/login', {
+    .when('/busquedaHotel', {
+        templateUrl: 'views/busquedaHotel.html',
+        controller: 'BusquedaHotelCtrl',
+        controllerAs: 'vm'
+      })
+    .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
         controllerAs: 'vm'
