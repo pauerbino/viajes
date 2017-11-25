@@ -1,6 +1,6 @@
 'use strict';
 angular.module('viajesApp')
-  .controller('BusquedaAutoCtrl', ['$location', '$routeParams', '$scope', 'AutoService', 'CiudadService', 'PaqueteService', function ( $location, $routeParams, $scope, AutoService, CiudadService, PaqueteService) {
+  .controller('BusquedaAutoCtrl', ['$location', '$routeParams', '$scope', '$filter', 'AutoService', 'CiudadService', function ( $location, $routeParams, $scope, $filter, AutoService, CiudadService) {
 
     $scope.autos = [];
     $scope.busqueda = {};
@@ -12,9 +12,9 @@ angular.module('viajesApp')
         CiudadService.getCiudades().then(function(response){
             $scope.ciudades = response;
         });
-        PaqueteService.getPaquete($scope.paqueteActual).then(function(response){
+       // PaqueteService.getPaquete($scope.paqueteActual).then(function(response){
 
-        });
+        //});
     }
 
     initialize();
@@ -23,7 +23,9 @@ angular.module('viajesApp')
         $scope.resultadoBusqueda = [];
         AutoService.reset();
         if (($scope.busqueda.lugarRetiro) && ($scope.busqueda.lugarDevolucion)){
-            AutoService.getAutos($scope.busqueda.lugarRetiro._id, $scope.busqueda.lugarDevolucion._id).then(function(response){
+            var fechaRetiro = $filter('date')($scope.busqueda.fechaRetiro, "dd-MM-yyyy");
+            var fechaDevolucion = $filter('date')($scope.busqueda.fechaDevolucion, "dd-MM-yyyy");
+            AutoService.getAutos($scope.busqueda.lugarRetiro._id, $scope.busqueda.lugarDevolucion._id, fechaRetiro, fechaDevolucion).then(function(response){
                 $scope.resultadoBusqueda = response;
             });
         }

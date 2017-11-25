@@ -12,14 +12,14 @@ angular.module('viajesApp')
             };
         };
 
-        service.getVuelos = function(destino, fecha) {
+        service.getVuelos = function(origen, destino, fecha) {
             var deferred = $q.defer();
             if (cache.vuelos) {
                 deferred.resolve(cache.vuelos);
             } else {
                 $http({
                     method: 'GET',
-                    url: Configuration.getConfiguration().baseURL + '/vuelos/'+ destino +'/'+ fecha
+                    url: Configuration.getConfiguration().baseURL + '/vuelos/'+ fecha +'/'+ origen + '/' + destino
                 }).then(function (response) {
                     cache.vuelos = response.data;
                     deferred.resolve(response.data);

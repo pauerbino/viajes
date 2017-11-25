@@ -20,6 +20,7 @@ var ciudades = require('./routes/ciudades');
 var hoteles = require('./routes/hoteles');
 var users = require('./routes/users');
 var register = require('./routes/register');
+var vuelos = require('./routes/vuelos');
 var app = express();
 app.use(cors());
 
@@ -34,6 +35,7 @@ app.use('/api/v1/ciudades', ciudades);
 app.use('/api/v1/hoteles', hoteles);
 app.use('/api/v1/users', users);
 app.use('/api/v1/register', register);
+app.use('/api/v1/vuelos', vuelos);
 
 require('./config/passport');
 
