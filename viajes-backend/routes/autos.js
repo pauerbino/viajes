@@ -6,24 +6,46 @@ var Agencia = require('../model/agenciaModel.js');
 
 
 
-router.get('/:retiro/:devolucion', function(req, res, next) {
+router.get('/:retiro/:devolucion/:fechaRetiro/:fechaDevolucion', function(req, res, next) {
+    var partesFechaRetiro = req.params.fechaRetiro.split('-');
+    var partesFechaDevolucion = req.params.fechaDevolucion.split('-');
+    var fechaComienzo; 
+    var fechaFin;
+    var fechaAAnalizar; 
+    var responseAutos = [];
     Auto.find().populate('agencia').exec(function(err, rta) {
-        // var disponible = false;
-        // var ciudadRetiroExiste =false;
-        // var ciudadDevolucionExiste = false;
-        // for
-
-        //     if (disponible)&&()&&(){
-
-        //     }
-        // Auto.populate(rta, {
-        //     path: 'agencia.ciudadSucursales',
-        //     model: 'Ciudad'
-        // },
-        // function(err, autos) {
-            if(err) return next(err);
-            res.json(rta);
-        // });
+        if(err) return next(err);
+        for(var auto of rta) {
+            agenciaId = auto.agencia._id;
+            autoFechasDisponibles = true;
+            sucursalEnRetiro = false;
+            sucursalEnDevolucion = false;
+            for (var ciudadId of auto.agencia.ciudadSucursales) {
+                if ((ciudadId == req.params.retiro)) {
+                    sucursalEnRetiro = true;
+                }
+                else {
+                    if ((ciudadId == req.params.devolucion)) {
+                        sucursalEnDevolucion = true;
+                    }
+                }
+            }
+            fechaComienzo = new Date(partesFechaRetiro[2],partesFechaRetiro[1]-1,partesFechaRetiro[0]); 
+            fechaFin = new Date(partesFechaDevolucion[2],partesFechaDevolucion[1]-1,partesFechaDevolucion[0]);
+            console.log(auto.modelo);
+            console.log(auto.fechasReservadas);
+            for (var d = fechaComienzo; d <= fechaFin; d.setDate(d.getDate() + 1)) {
+                fechaAAnalizar = (("0" + d.getDate()).slice(-2)) + "/" + (("0" + (d.getMonth() + 1)).slice(-2)) + "/" + d.getFullYear();
+                console.log(fechaAAnalizar);
+                if (auto.fechasReservadas.includes(fechaAAnalizar)) {
+                    autoFechasDisponibles = false;
+                }
+            }
+            if (autoFechasDisponibles && sucursalEnDevolucion && sucursalEnRetiro) {
+                responseAutos.push(auto);
+            }
+        }       
+        res.json(responseAutos);
     });
 });
 

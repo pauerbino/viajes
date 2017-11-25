@@ -1,6 +1,6 @@
 'use strict';
 angular.module('viajesApp')
-  .controller('BusquedaVueloCtrl', ['$location', '$scope', 'VueloService', 'CiudadService', function ( $location, $scope, VueloService, CiudadService) {
+  .controller('BusquedaVueloCtrl', ['$location', '$scope', '$filter', 'VueloService', 'CiudadService', function ( $location, $scope, $filter, VueloService, CiudadService) {
 
     $scope.vuelos = [];
     $scope.busqueda = {};
@@ -19,8 +19,10 @@ angular.module('viajesApp')
     $scope.buscar = function() {
         $scope.resultadoBusqueda = [];
         VueloService.reset();
-        if (($scope.busqueda.destino) && ($scope.busqueda.fecha)){
-            VueloService.getVuelos($scope.busqueda.destino, $scope.busqueda.fecha).then(function(response){
+        if (($scope.busqueda.origen) && ($scope.busqueda.destino) &&($scope.busqueda.fecha)){
+            var fecha = $filter('date')($scope.busqueda.fecha, "dd-MM-yyyy");
+            VueloService.getVuelos($scope.busqueda.origen._id, $scope.busqueda.destino._id, fecha).then(function(response){
+                console.log(response);
                 $scope.resultadoBusqueda = response;
             });
         }
