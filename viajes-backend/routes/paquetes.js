@@ -22,8 +22,8 @@ router.get('/:id', function(req, res, next) {
 
 router.post('/ReservaHotel', function(req, res, next) {
     var nuevaReserva = new ReservaHotel ({
-        hotel : req.body.hotel,
-        monto : req.body.monto
+        hotel: req.body.hotel,
+        monto: req.body.monto
     });
 
     nuevaReserva.save(function(err) {
@@ -41,6 +41,47 @@ router.post('/ReservaHotel', function(req, res, next) {
 
 });
 
+router.post('/ReservaVuelo', function(req, res, next) {
+    var nuevaReserva = new ReservaVuelo ({
+        vuelo: req.body.vuelo,
+        monto: req.body.monto
+    });
+
+    nuevaReserva.save(function(err) {
+        if (err) throw err;
+    });
+
+    Paquete.findById(req.body.idPaquete).exec(function(err, paquete) {
+        if (err) return next(err);
+        paquete.reservaVuelo.push(nuevaReserva);
+        paquete.save(function(err) {
+            if (err) throw err;
+            res.json(paquete);
+        });
+    });
+});
+
+router.post('/ReservaAuto', function(req, res, next) {
+    var nuevaReserva = new ReservaAuto ({
+        auto: req.body.auto,
+        monto: req.body.monto,
+        lugarRetiro: req.body.lugarRetiro,
+        lugarDevolucion: req.body.lugarDevolucion
+    });
+
+    nuevaReserva.save(function(err) {
+        if (err) throw err;
+    });
+
+    Paquete.findById(req.body.idPaquete).exec(function(err, paquete) {
+        if (err) return next(err);
+        paquete.reservaAuto.push(nuevaReserva);
+        paquete.save(function(err) {
+            if (err) throw err;
+            res.json(paquete);
+        });
+    });
+});
 
 // router.post('/', function(req, res, next) {
 //     var contactsList = [] ;

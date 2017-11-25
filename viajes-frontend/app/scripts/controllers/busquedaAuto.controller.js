@@ -7,14 +7,13 @@ angular.module('viajesApp')
     $scope.ciudades = [];
     $scope.ciudad = {};
     $scope.resultadoBusqueda = [];
-    $scope.paqueteActual = $routeParams.idPaquete;
+    $scope.idPaquete = $routeParams.idPaquete;
     function initialize() {
         CiudadService.getCiudades().then(function(response){
             $scope.ciudades = response;
         });
-       // PaqueteService.getPaquete($scope.paqueteActual).then(function(response){
-
-        //});
+        PaqueteService.getPaquete($scope.idPaquete).then(function(response){
+        });
     }
 
     initialize();
@@ -31,9 +30,14 @@ angular.module('viajesApp')
         }
     };
 
-    $scope.agregarAlCarrito = function() {
-
-
+    $scope.agregarAlCarrito = function(auto) {
+        PaqueteService.nuevaReservaAuto($scope.idPaquete, auto._id, auto.monto, $scope.busqueda.lugarRetiro._id, $scope.busqueda.lugarDevolucion._id).then(function(response){
+            console.log(response);
+            PaqueteService.reset();
+            PaqueteService.getPaquete($scope.idPaquete).then(function(resp){
+                console.log(resp);
+            });
+        });
     };
 
     $scope.quitarDelCarrito = function() {

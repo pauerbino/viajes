@@ -1,12 +1,13 @@
 'use strict';
 angular.module('viajesApp')
-  .controller('BusquedaHotelCtrl', ['$location', '$scope', '$filter', 'HotelService', 'CiudadService', function ( $location, $scope, $filter, HotelService, CiudadService) {
+  .controller('BusquedaHotelCtrl', [ '$filter', '$location', '$routeParams', '$scope', 'HotelService', 'CiudadService', 'PaqueteService', function ( $filter, $location,  $routeParams, $scope, HotelService, CiudadService, PaqueteService) {
 
     $scope.hoteles = [];
     $scope.busqueda = {};
     $scope.ciudades = [];
     $scope.ciudad = {};
     $scope.resultadoBusqueda = [];
+    $scope.idPaquete = $routeParams.idPaquete;
 
     function initialize() {
         CiudadService.getCiudades().then(function(response){
@@ -29,7 +30,14 @@ angular.module('viajesApp')
         }
     };
 
-    $scope.agregarAlCarrito = function() {
+    $scope.agregarAlCarrito = function(hotel) {
+        PaqueteService.nuevaReservaHotel($scope.idPaquete, hotel._id, hotel.monto).then(function(response){
+            console.log(response);
+            PaqueteService.reset();
+            PaqueteService.getPaquete($scope.idPaquete).then(function(resp){
+                console.log(resp);
+            });
+        });
     };
 
     $scope.quitarDelCarrito = function() {
