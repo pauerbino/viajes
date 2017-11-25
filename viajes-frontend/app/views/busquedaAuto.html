@@ -8,7 +8,7 @@
                 <div class="col-xs-6">
                     <div class="form-group" ng-class="{'has-error':busquedaAutoForm.lugarRetiro.$invalid && busquedaAutoForm.$submitted}">
                         <label for="lugarRetiro" class="control-label">Lugar de Retiro *</label>
-                        <ui-select allow-clear name="lugarRetiro" ng-model="busquedaAutoForm.lugarRetiro" theme="bootstrap" required>
+                        <ui-select allow-clear name="lugarRetiro" ng-model="busqueda.lugarRetiro" theme="bootstrap" required>
                             <ui-select-match placeholder="Selecciona una ciudad">{{$select.selected.nombre}} {{$select.selected.pais}}</ui-select-match>
                             <ui-select-choices repeat="item in ciudades | filter: $select.search">
                                 {{item.nombre}}, {{item.pais}}
@@ -20,7 +20,7 @@
                 <div class="col-xs-6">
                     <div class="form-group" ng-class="{'has-error':busquedaAutoForm.lugarDevolucion.$invalid && busquedaAutoForm.$submitted}">
                         <label for="lugarDevolucion" class="control-label">Lugar de Devolución *</label>
-                        <ui-select allow-clear name="lugarDevolucion" ng-model="busquedaAutoForm.lugarDevolucion" theme="bootstrap" required>
+                        <ui-select allow-clear name="lugarDevolucion" ng-model="busqueda.lugarDevolucion" theme="bootstrap" required>
                             <ui-select-match placeholder="Selecciona una ciudad">{{$select.selected.nombre}} {{$select.selected.pais}}</ui-select-match>
                             <ui-select-choices repeat="item in ciudades | filter: $select.search">
                                 {{item.nombre}}, {{item.pais}}
@@ -49,7 +49,7 @@
             <div class="row">
                 <div class="col-xs-6">
                     <div>
-                        <button type="submit" class="btn btn-info btn-form" ng-click=""> Buscar </button>
+                        <button type="submit" class="btn btn-info btn-form" ng-click="buscar()"> Buscar </button>
                     </div>
                 </div>
             </div>
@@ -57,68 +57,26 @@
     </div>
 </div>
 <div class="resultado-container">
-    <h4 class="bold" style="margin-bottom: 30px;"> Resultados (2{{contadorResultado}})</h4>
-    <div class="row resultado-single">
+    <h4 class="bold" style="margin-bottom: 30px;"> Resultados ({{resultadoBusqueda.length}})</h4>
+    <div class="row resultado-single" ng-repeat="auto in resultadoBusqueda">
         <div class="thumbnail col-xs-3">
-             <img class="img-rounded" src="https://seguroweb.com.ar/webroot/images/productos/auto.jpg" alt="Image not found">
+             <img class="img-rounded" ng-src="{{auto.url}}" alt="Image not found">
         </div>
         <div class="col-xs-6">
-            <h4 class="bold">Chevrolet 242</h4>
-            <div>Agencia "Tu Chevrolet"</div>
-            <p class="disponibilidad-auto"> Quedan disponibles 2 de 100 modelos</p>
+            <h4 class="bold">{{auto.marca}} {{auto.modelo}}</h4>
+            <div>{{auto.agencia.nombre}}</div>
+            <p class="disponibilidad"> Quedan disponibles {{auto.cantidadDisponible}} de {{auto.cantidadTotal}} modelos</p>
 
         </div>
         <div class="col-xs-3 align-center">
             <div class="precio-container">
                 <div>Por sólo</div>
-                <div class="precio-font">$1000</div>
+                <div class="precio-font">${{auto.monto}}</div>
                 <div> por día</div>
             </div>
             <button class="btn btn-info btn-form" ng-click="agregarAlCarrito()" ng-show="false"> Agregar al Carrito </button>
             <button class="btn btn-danger btn-form" ng-click="quitarDelCarrito()" ng-show="true"> Quitar del Carrito </button>
         </div>
-
-    </div>
-    <hr/>
-    <div class="row resultado-single">
-        <div class="thumbnail col-xs-3">
-             <img class="img-rounded" src="http://pcibizarentacar.com/wp-content/uploads/car-rental-gallery/1481022472_maxresdefault.jpg" alt="Image not found">
-        </div>
-        <div class="col-xs-6">
-            <h4 class="bold">Peugeot 307</h4>
-            <div>Agencia "Tu Chevrolet"</div>
-            <p class="disponibilidad-auto"> Quedan disponibles 5 de 10 modelos</p>
-
-        </div>
-        <div class="col-xs-3 align-center">
-            <div class="precio-container">
-                <div>Por sólo</div>
-                <div class="precio-font">$800</div>
-                <div> por día</div>
-            </div>
-            <button class="btn btn-info btn-form" ng-click="agregarAlCarrito()" ng-show="false"> Agregar al Carrito </button>
-            <button class="btn btn-danger btn-form" ng-click="quitarDelCarrito()" ng-show="true"> Quitar del Carrito </button>
-        </div>
-    </div>
-    <hr/>
-    <div class="row resultado-single">
-        <div class="thumbnail col-xs-3">
-             <img class="img-rounded" src="http://pcibizarentacar.com/wp-content/uploads/car-rental-gallery/1481022472_maxresdefault.jpg" alt="Image not found">
-        </div>
-        <div class="col-xs-6">
-            <h4 class="bold">Peugeot 308</h4>
-            <div>Agencia "Tu Chevrolet"</div>
-            <p class="disponibilidad-auto"> Quedan disponibles 5 de 10 modelos</p>
-
-        </div>
-        <div class="col-xs-3 align-center">
-            <div class="precio-container">
-                <div>Por sólo</div>
-                <div class="precio-font">$800</div>
-                <div> por día</div>
-            </div>
-            <button class="btn btn-info btn-form" ng-click="agregarAlCarrito()" ng-show="false"> Agregar al Carrito </button>
-            <button class="btn btn-danger btn-form" ng-click="quitarDelCarrito()" ng-show="true"> Quitar del Carrito </button>
-        </div>
+        <hr/>
     </div>
 </div>

@@ -1,27 +1,27 @@
 'use strict';
 angular.module('viajesApp')
-    .service('AutoService', ['$http', '$q', 'Configuration', function ($http, $q, Configuration) {
+    .service('PaqueteService', ['$http', '$q', 'Configuration', function ($http, $q, Configuration) {
         var service = {};
         var cache = {
-            autos: null
+            paquete: null
         };
 
         service.reset = function() {
             cache = {
-                autos: null
+                paquete: null
             };
         };
 
-        service.getAutos = function(retiro, devolucion) {
+        service.getPaquetes = function(destino, estrellas) {
             var deferred = $q.defer();
-            if (cache.autos) {
-                deferred.resolve(cache.autos);
+            if (cache.paquete) {
+                deferred.resolve(cache.paquete);
             } else {
                 $http({
                     method: 'GET',
-                    url: Configuration.getConfiguration().baseURL + '/autos/'+ retiro +'/'+ devolucion
+                    url: Configuration.getConfiguration().baseURL + '/paquetes'
                 }).then(function (response) {
-                    cache.autos = response.data;
+                    cache.paquete = response.data;
                     deferred.resolve(response.data);
                 }).catch(function (response) {
                     deferred.reject(response);
@@ -31,11 +31,11 @@ angular.module('viajesApp')
             return deferred.promise;
         };
 
-        service.getAuto = function(id) {
+        service.getPaquete = function(id) {
             var deferred = $q.defer();
             $http({
                 method: 'GET',
-                url: Configuration.getConfiguration().baseURL + '/autos/' + id
+                url: Configuration.getConfiguration().baseURL + '/paquetes/' + id
             }).then(function (response) {
                 deferred.resolve(response.data);
             }).catch(function (response) {

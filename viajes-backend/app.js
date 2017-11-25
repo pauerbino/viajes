@@ -15,8 +15,9 @@ mongoose.connect('mongodb://localhost:27017/viajes', {useMongoClient: true})
   .then(() =>  console.log('connection successful'))
   .catch((err) => console.error(err));
 
+var autos = require('./routes/autos');
 var ciudades = require('./routes/ciudades');
-var lists = require('./routes/lists');
+var hoteles = require('./routes/hoteles');
 var users = require('./routes/users');
 var register = require('./routes/register');
 var app = express();
@@ -28,8 +29,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(express.static(path.join(__dirname, 'dist')));
 
+app.use('/api/v1/autos', autos);
 app.use('/api/v1/ciudades', ciudades);
-app.use('/api/v1/lists', lists);
+app.use('/api/v1/hoteles', hoteles);
 app.use('/api/v1/users', users);
 app.use('/api/v1/register', register);
 

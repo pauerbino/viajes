@@ -20,12 +20,22 @@ angular
   ])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/busquedaAuto', {
+      .when('/busquedaAuto/:idPaquete', {
         templateUrl: 'views/busquedaAuto.html',
         controller: 'BusquedaAutoCtrl',
         controllerAs: 'vm'
       })
-      .when('/login', {
+    .when('/busquedaHotel/:idPaquete', {
+        templateUrl: 'views/busquedaHotel.html',
+        controller: 'BusquedaHotelCtrl',
+        controllerAs: 'vm'
+      })
+    .when('/busquedaVuelo/:idPaquete', {
+        templateUrl: 'views/busquedaVuelo.html',
+        controller: 'BusquedaVueloCtrl',
+        controllerAs: 'vm'
+      })
+    .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
         controllerAs: 'vm'
