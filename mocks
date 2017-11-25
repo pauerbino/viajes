@@ -9,3 +9,55 @@ db.autos.insertMany([{marca: "Suzuky", modelo: "Fun", cantidadTotal: 10, cantida
 
 Hoteles:
 db.hotels.insertMany([{nombre: "Sheraton", direccion: "Calle 15 Nro 987", estrellas: 4, cantidadHabitacionesDisponibles:50, cantidadHabitaciones:100, monto:800, ciudad:"5a12d6fc3a180159ac2dcc2c", url:"https://s-ec.bstatic.com/images/hotel/max1024x768/319/31911206.jpg"},{nombre: "Miami Resort", direccion: "5th Aveneu", estrellas: 5, cantidadHabitacionesDisponibles:10, cantidadHabitaciones:200, monto:1800, ciudad:"5a12d6fc3a180159ac2dcc2e", url:"https://c.otcdn.com/imglib/hotelfotos/8/003/hotel-avenida-de-espana-fuenlabrada-020.jpg"}, {nombre: "Hotel España", direccion: "Baranquilla 127", estrellas: 2, cantidadHabitacionesDisponibles:4, cantidadHabitaciones:30, monto:500, ciudad:"5a12d6fc3a180159ac2dcc30", url:"https://s-ec.bstatic.com/images/hotel/max1024x768/690/6903553.jpg"}])
+db.hotels.insertMany([
+{nombre:"", aerolinea:"", ciudadOrigen:"", ciudadDestino }
+])
+
+Vuelos:
+
+var VueloSchema = Schema({
+    nombre : {type : String, default: ''},
+    aerolinea : { type: Schema.Types.ObjectId, ref: 'Aerolinea' },
+    ciudadOrigen: {type : String, default: ''},
+    ciudadDestino: {type : String, default: ''},
+    fechaSalida: {type: Date},
+    fechaLlegada: {type: Date},
+    cantPasajeros: {type: Number, default: 0},
+    cantPasajerosDisp: {type: Number, default: 0},
+    precio: {type: Number, default: 0}
+});
+
+Paquetes:
+db.paquetes.insert({reservaAuto : [], reservaHotel : [], reservaVuelo : []})
+5a18630b5264222a9e7afb36
+
+Hacer reserva del 1 al 4 de febrero
+Reservo y meto todos los dias en el array
+fechasReservadas: ['1/2','2/2',3/2.4/2]
+Me quiero fijar si esta dispoonible(lo que va a devolver el get)
+me fijo que no esten incluido ninguno de los dias ENTRE (INCLUIDO EXTREMOS) LAS FECHAS IDEA Y VUELTA
+
+Falta:
+- Crear Aerolineas con mocks
+- Crear Vuelos (mocks como los de aca) con fecha tipo datetime
+- Agregar al modelo autos un array de fechas "reservadas", y actualizar los mocks agregandole ese array y crear de nuevo los autos.
+Este cambio hace que "cantidadTotal y cantidadDisponible" no tengan que ir mas...y el auto deberia tener patente seria unico auto
+- Ver el cambio que se va a hacer para hoteles segun la fecha. Array de fechas tambien??
+- GET /autos/:retiro/:devolucion/:fechaRetiro/:fechaDevolucion --> Tiene que devolver los autos que:
+    * tiene que populate(Agencia)
+    * esten disponibles (las fechas entre :fechaRetiro y :fechaDevolucion no deben estar include() en el array de "fechasReservadas")
+    * la ciudad de retiro tiene que estar incluida en el array de ciudades de sucursales de la agencia
+    * la ciudad de devolucion tiene que estar incluida en el array de ciudades de sucursales de la agencia
+
+- GET /vuelo/:fecha/:origen/:destino --> Tiene que devolver los vuelos que:
+    * cantPasajerosDisp sea mayor que cero
+    * fechaSalida sea igual a fecha(param)
+    * ciudadOrigen sea igual al origen (que es de tipo ciudad id)
+    * ciudadDestino sea igual al destino (que es de tipo ciudad id)
+    * tiene que populate(Aerolinea)
+
+- GET /hotel/:destino/:estrellas --> Tiene que devolver los hoteles que:
+    * La ciudad del hotel sea igual a :destino (tipo ciudad id)
+    * Que cantidadHabitacionesDisponibles sea mayor a cero
+    * que coincidan las estrellas
+

@@ -1,38 +1,46 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Auto = require('../model/autoModel.js');
-var Agencia = require('../model/agenciaModel.js');
+var Paquete = require('../model/paqueteModel.js');
+var ReservaHotel = require('../model/reservaHotelModel.js');
 
 
 
-router.get('/:retiro/:devolucion', function(req, res, next) {
-    Auto.find().populate('agencia').exec(function(err, rta) {
-        // var disponible = false;
-        // var ciudadRetiroExiste =false;
-        // var ciudadDevolucionExiste = false;
-        // for
-
-        //     if (disponible)&&()&&(){
-
-        //     }
-        // Auto.populate(rta, {
-        //     path: 'agencia.ciudadSucursales',
-        //     model: 'Ciudad'
-        // },
-        // function(err, autos) {
-            if(err) return next(err);
-            res.json(rta);
-        // });
+router.get('/', function(req, res, next) {
+    Paquete.find(function (err, response) {
+        if (err) return next(err);
+        res.json(response);
     });
 });
 
-// router.get('/:id', function(req, res, next) {
-//     List.findById(req.params.id).populate('contacts').exec(function(err, list) {
-//         if (err) return next(err);
-//         res.json(list);
-//     });
-// });
+router.get('/:id', function(req, res, next) {
+    Paquete.findById(req.params.id).exec(function(err, paquete) {
+        if (err) return next(err);
+        res.json(paquete);
+    });
+});
+
+router.post('/ReservaHotel', function(req, res, next) {
+    var nuevaReserva = new ReservaHotel ({
+        hotel : req.body.hotel,
+        monto : req.body.monto
+    });
+
+    nuevaReserva.save(function(err) {
+        if (err) throw err;
+    });
+
+    Paquete.findById(req.body.idPaquete).exec(function(err, paquete) {
+        if (err) return next(err);
+        paquete.reservaHotel.push(nuevaReserva);
+        paquete.save(function(err) {
+            if (err) throw err;
+            res.json(paquete);
+        });
+    });
+
+});
+
 
 // router.post('/', function(req, res, next) {
 //     var contactsList = [] ;

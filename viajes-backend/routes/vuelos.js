@@ -1,29 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Auto = require('../model/autoModel.js');
-var Agencia = require('../model/agenciaModel.js');
+var Vuelo = require('../model/vueloModel.js');
 
 
 
-router.get('/:retiro/:devolucion', function(req, res, next) {
-    Auto.find().populate('agencia').exec(function(err, rta) {
-        // var disponible = false;
-        // var ciudadRetiroExiste =false;
-        // var ciudadDevolucionExiste = false;
-        // for
-
-        //     if (disponible)&&()&&(){
-
-        //     }
-        // Auto.populate(rta, {
-        //     path: 'agencia.ciudadSucursales',
-        //     model: 'Ciudad'
-        // },
-        // function(err, autos) {
-            if(err) return next(err);
-            res.json(rta);
-        // });
+router.get('/:destino/:fecha', function(req, res, next) {
+    Vuelo.find(function (err, response) {
+        if (err) return next(err);
+        res.json(response);
     });
 });
 

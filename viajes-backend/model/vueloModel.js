@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var VueloSchema = Schema({
-    name : {type : String, default: ''},
+    nombre : {type : String, default: ''},
     aerolinea : { type: Schema.Types.ObjectId, ref: 'Aerolinea' },
     ciudadOrigen: {type : String, default: ''},
     ciudadDestino: {type : String, default: ''},
