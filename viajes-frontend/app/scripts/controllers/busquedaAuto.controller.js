@@ -1,16 +1,19 @@
 'use strict';
 angular.module('viajesApp')
-  .controller('BusquedaAutoCtrl', ['$location', '$scope', 'AutoService', 'CiudadService', function ( $location, $scope, AutoService, CiudadService) {
+  .controller('BusquedaAutoCtrl', ['$location', '$routeParams', '$scope', 'AutoService', 'CiudadService', 'PaqueteService', function ( $location, $routeParams, $scope, AutoService, CiudadService, PaqueteService) {
 
     $scope.autos = [];
     $scope.busqueda = {};
     $scope.ciudades = [];
     $scope.ciudad = {};
     $scope.resultadoBusqueda = [];
-
+    $scope.paqueteActual = $routeParams.idPaquete;
     function initialize() {
         CiudadService.getCiudades().then(function(response){
             $scope.ciudades = response;
+        });
+        PaqueteService.getPaquete($scope.paqueteActual).then(function(response){
+
         });
     }
 
