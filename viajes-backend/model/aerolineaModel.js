@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var AerolineaSchema = Schema({
-    name : {type : String, default: ''},
+    nombre : {type : String, default: ''},
     url: {type : String, default: ''}
 });
 
