@@ -45,5 +45,69 @@ angular.module('viajesApp')
             return deferred.promise;
         };
 
+        service.nuevaReservaHotel = function(idPaquete, hotel, monto) {
+            var deferred = $q.defer();
+            var body = {
+                idPaquete: idPaquete,
+                hotel: hotel,
+                monto: monto
+            };
+
+            $http({
+                method : 'POST',
+                url : Configuration.getConfiguration().baseURL + '/paquetes/ReservaHotel',
+                data: body
+            }).then(function(response) {
+                deferred.resolve(response);
+            }).catch(function(response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        };
+
+        service.nuevaReservaVuelo = function(idPaquete, vuelo, monto) {
+            var deferred = $q.defer();
+            var body = {
+                idPaquete: idPaquete,
+                vuelo: vuelo,
+                monto: monto
+            };
+
+            $http({
+                method : 'POST',
+                url : Configuration.getConfiguration().baseURL + '/paquetes/ReservaVuelo',
+                data: body
+            }).then(function(response) {
+                deferred.resolve(response);
+            }).catch(function(response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        };
+
+        service.nuevaReservaAuto = function(idPaquete, auto, monto, lugarRetiro, lugarDevolucion) {
+            var deferred = $q.defer();
+            var body = {
+                idPaquete: idPaquete,
+                auto: auto,
+                monto: monto,
+                lugarRetiro: lugarRetiro,
+                lugarDevolucion: lugarDevolucion
+            };
+
+            $http({
+                method : 'POST',
+                url : Configuration.getConfiguration().baseURL + '/paquetes/ReservaAuto',
+                data: body
+            }).then(function(response) {
+                deferred.resolve(response);
+            }).catch(function(response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        };
         return service;
     }]);
