@@ -77,8 +77,12 @@
                 <div class="precio-font">${{vuelo.precio}}</div>
                 <div> por día</div>
             </div>
-            <button class="btn btn-info btn-form" ng-click="agregarAlCarrito()" ng-show="isLoggedIn()"> Agregar al Carrito </button>
+
+            <button class="btn btn-info btn-form" ng-click="agregarAlCarrito(vuelo)" ng-show="isLoggedIn()"> Agregar al Carrito </button>
             <button class="btn btn-danger btn-form" ng-click="quitarDelCarrito()" ng-show="false"> Quitar del Carrito </button>
+<!--
+            <button class="btn btn-info btn-form" ng-click="agregarAlCarrito(vuelo)" ng-show="false"> Agregar al Carrito </button>
+            <button class="btn btn-danger btn-form" ng-click="quitarDelCarrito()" ng-show="true"> Quitar del Carrito </button> -->
         </div>
         <hr/>
     </div>

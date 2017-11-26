@@ -16,7 +16,20 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-    Paquete.findById(req.params.id).populate('reservaVuelo').populate('reservaHotel').populate('reservaAuto').exec(function(err, paquete) {
+    Paquete.findById(req.params.id).populate({
+        path: 'reservaVuelo',
+        populate: { path: 'vuelo',
+            populate:  { path: 'aerolinea'}
+        }
+      }).populate({
+        path: 'reservaHotel',
+        populate: { path: 'hotel',
+            populate: { path: 'ciudad'}
+        }
+      }).populate({
+        path: 'reservaAuto',
+        populate: { path: 'auto' }
+      }).exec(function(err, paquete) {
         if (err) return next(err);
         res.json(paquete);
     });
