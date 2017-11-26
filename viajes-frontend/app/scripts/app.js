@@ -20,11 +20,11 @@ angular
   ])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/busquedaAuto/:idPaquete', {
+    .when('/busquedaAuto/:idPaquete', {
         templateUrl: 'views/busquedaAuto.html',
         controller: 'BusquedaAutoCtrl',
         controllerAs: 'vm'
-      })
+    })
     .when('/busquedaHotel/:idPaquete', {
         templateUrl: 'views/busquedaHotel.html',
         controller: 'BusquedaHotelCtrl',
@@ -34,28 +34,33 @@ angular
         templateUrl: 'views/busquedaVuelo.html',
         controller: 'BusquedaVueloCtrl',
         controllerAs: 'vm'
-      })
+    })
+    .when('/miCarrito/:idPaquete', {
+        templateUrl: 'views/miCarrito.html',
+        controller: 'MiCarritoCtrl',
+        controllerAs: 'vm'
+    })
     .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
         controllerAs: 'vm'
-      })
-      .when('/signin', {
+    })
+    .when('/signin', {
         templateUrl: 'views/signin.html',
         controller: 'SigninCtrl',
         controllerAs: 'vm'
-      })
-      .when('/home', {
+    })
+    .when('/home', {
         templateUrl: 'views/home.html',
         controller: 'HomeCtrl',
         controllerAs: 'vm'
-      })
-      .when('/logOut', {
+    })
+    .when('/logOut', {
         templateUrl: 'views/home.html',
         controller: 'LogOutCtrl',
         controllerAs: 'vm'
-      })
-      .otherwise({
+    })
+    .otherwise({
         redirectTo: '/home'
-      });
+    });
   });

@@ -28,8 +28,13 @@ angular.module('viajesApp')
         }
     };
 
-    $scope.agregarAlCarrito = function() {
-
+    $scope.agregarAlCarrito = function(vuelo) {
+        PaqueteService.nuevaReservaVuelo($scope.idPaquete, vuelo._id, vuelo.monto).then(function(response){
+            PaqueteService.reset();
+            PaqueteService.getPaquete($scope.idPaquete).then(function(resp){
+                console.log(resp);
+            });
+        });
 
     };
 
