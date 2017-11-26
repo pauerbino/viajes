@@ -1,18 +1,15 @@
 'use strict';
 angular.module('viajesApp')
-  .controller('BusquedaAutoCtrl', ['$location', '$routeParams', '$scope', '$filter', 'AutoService', 'CiudadService', 'UserService', 'PaqueteService', function ( $location, $routeParams, $scope, $filter, AutoService, CiudadService, UserService, PaqueteService) {
+  .controller('BusquedaAutoSinUserCtrl', ['$location', '$scope', '$filter', 'AutoService', 'CiudadService', 'UserService', function ( $location, $scope, $filter, AutoService, CiudadService, UserService) {
 
-    $scope.autos = [];
     $scope.busqueda = {};
     $scope.ciudades = [];
     $scope.ciudad = {};
     $scope.resultadoBusqueda = [];
-    $scope.idPaquete = $routeParams.idPaquete;
+
     function initialize() {
         CiudadService.getCiudades().then(function(response){
             $scope.ciudades = response;
-        });
-        PaqueteService.getPaquete($scope.idPaquete).then(function(response){
         });
     }
 
@@ -34,21 +31,11 @@ angular.module('viajesApp')
         }
     };
 
-    $scope.agregarAlCarrito = function(auto) {
-        PaqueteService.nuevaReservaAuto($scope.idPaquete, auto._id, auto.monto, $scope.busqueda.lugarRetiro._id, $scope.busqueda.lugarDevolucion._id).then(function(response){
-            console.log(response);
-            PaqueteService.reset();
-            PaqueteService.getPaquete($scope.idPaquete).then(function(resp){
-                console.log(resp);
-            });
-        });
-    };
-
     $scope.irBusquedaHoteles = function() {
-        $location.path('/busquedaHotel/'+$scope.idPaquete);
+        $location.path('/busquedaHotel');
     };
 
     $scope.irBusquedaVuelo = function() {
-        $location.path('/busquedaVuelo/'+$scope.idPaquete);
+        $location.path('/busquedaVuelo');
     };
   }]);

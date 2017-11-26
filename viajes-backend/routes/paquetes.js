@@ -5,6 +5,9 @@ var Paquete = require('../model/paqueteModel.js');
 var ReservaHotel = require('../model/reservaHotelModel.js');
 var ReservaVuelo = require('../model/reservaVueloModel.js');
 var ReservaAuto = require('../model/reservaAutoModel.js');
+var Vuelo = require('../model/vueloModel.js');
+var Auto = require('../model/autoModel.js');
+var Hotel = require('../model/hotelModel.js');
 
 
 
@@ -19,7 +22,7 @@ router.get('/:id', function(req, res, next) {
     Paquete.findById(req.params.id).populate({
         path: 'reservaVuelo',
         populate: { path: 'vuelo',
-            populate:  [{ path: 'aerolinea'},{ path: 'ciudadOrigen'}]
+            populate:  [{ path: 'aerolinea'},{ path: 'ciudadOrigen'},{ path: 'ciudadDestino'}]
         }
       }).populate({
         path: 'reservaHotel',
@@ -28,7 +31,7 @@ router.get('/:id', function(req, res, next) {
         }
       }).populate({
         path: 'reservaAuto',
-        populate: { path: 'auto' }
+        populate: [{ path: 'auto', populate: {path: 'agencia'} },{ path: 'lugarRetiro' }, { path: 'lugarDevolucion' }]
       }).exec(function(err, paquete) {
         if (err) return next(err);
         res.json(paquete);
@@ -113,20 +116,44 @@ router.post('/ReservaAuto', function(req, res, next) {
 //     });
 // });
 
-// router.put('/:id', function(req, res, next) {
-//     var contactsList = [] ;
-//     for(var c of req.body.contacts) {
-//         contactsList.push(c._id);
-//     }
-//     var body = {
-//         name: req.body.name,
-//         contacts: contactsList
-//     }
-//     List.findByIdAndUpdate(req.params.id, body, function (err, put) {
-//         if (err) return next(err);
-//         res.json(put);
-//     });
-// });
+router.put('/pagar/:id', function(req, res, next) {
+    Paquete.findById(req.params.id).populate('reservaVuelo reservaHotel reservaAuto').exec(function(err, paquete) {
+        for (var i = 0; i < paquete.reservaAuto.length; i++) {
+            Auto.findById(paquete.reservaAuto[i].auto).exec(function(err, auto) {
+                //Hacer reserva
+                //TODO
+                auto.save(function(err) {
+                    if (err) throw err;
+                });
+            });
+        }
+
+        for (var i = 0; i < paquete.reservaVuelo.length; i++) {
+            Vuelo.findById(paquete.reservaVuelo[i].vuelo).exec(function(err, vuelo) {
+                vuelo.cantPasajerosDisp --;
+                vuelo.save(function(err) {
+                    if (err) throw err;
+                });
+            });
+        }
+
+        for (var i = 0; i < paquete.reservaHotel.length; i++) {
+            Hotel.findById(paquete.reservaHotel[i].hotel).exec(function(err, hotel) {
+                hotel.cantidadHabitacionesDisponibles --;
+                hotel.save(function(err) {
+                    if (err) throw err;
+                });
+            });
+        }
+
+        if (err) return next(err);
+        paquete.pagado = true;
+        paquete.save(function(err) {
+            if (err) throw err;
+            res.json(paquete);
+        });
+    });
+});
 
 // router.delete('/:id', function(req, res, next) {
 //     List.findByIdAndRemove(req.params.id, req.body, function (err, post) {

@@ -35,6 +35,21 @@ angular
         controller: 'BusquedaVueloCtrl',
         controllerAs: 'vm'
     })
+    .when('/busquedaAuto', {
+        templateUrl: 'views/busquedaAutoSinUser.html',
+        controller: 'BusquedaAutoSinUserCtrl',
+        controllerAs: 'vm'
+    })
+    .when('/busquedaHotel', {
+        templateUrl: 'views/busquedaHotelSinUser.html',
+        controller: 'BusquedaHotelSinUserCtrl',
+        controllerAs: 'vm'
+      })
+    .when('/busquedaVuelo', {
+        templateUrl: 'views/busquedaVueloSinUser.html',
+        controller: 'BusquedaVueloSinUserCtrl',
+        controllerAs: 'vm'
+    })
     .when('/miCarrito/:idPaquete', {
         templateUrl: 'views/miCarrito.html',
         controller: 'MiCarritoCtrl',

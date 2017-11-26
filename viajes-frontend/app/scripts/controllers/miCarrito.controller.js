@@ -13,10 +13,16 @@ angular.module('viajesApp')
     function initialize() {
         PaqueteService.getPaquete($scope.idPaquete).then(function(response){
             $scope.paquete = response;
+            console.log(response);
         });
     }
 
     initialize();
 
+    $scope.pagar = function() {
+        PaqueteService.pagarPaquete($scope.idPaquete).then(function(response){
+            console.log(response);
+        });
+    }
 
   }]);

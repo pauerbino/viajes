@@ -10,6 +10,10 @@ body {
   background-image: url("../images/digital-marketing.jpg");
 }
 
+html, body {
+    height: 100%;
+}
+
 /* Custom page header */
 .header {
   margin-bottom: 10px;
@@ -172,9 +176,29 @@ body {
     font-style: italic;
 }
 
+.two-button-headers-container {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 20px;
+    margin-right: 20px;
+}
 
+.one-button-headers-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.button-header {
+    display: flex;
+    align-items: baseline;
+    cursor: pointer;
+}
 
-
+.font {
+    color: #31708f;
+    font-weight: bold
+}
 
 
 

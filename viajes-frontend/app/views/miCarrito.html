@@ -1,25 +1,73 @@
 <h4>Mi Carrito:</h4>
 <div class="resultado-container">
-    <h4 class="bold" style="margin-bottom: 30px;"> Resultados ({{resultadoBusqueda.length}})</h4>
-    <div class="row resultado-single" ng-repeat="auto in resultadoBusqueda">
+    <h4 class="bold" style="margin-bottom: 30px;"> Mis Reservas de Vuelos ({{paquete.reservaVuelo.length}})</h4>
+    <div class="row resultado-single" ng-repeat="reserva in paquete.reservaVuelo">
         <div class="thumbnail col-xs-3">
-             <img class="img-rounded" ng-src="{{auto.url}}" alt="Image not found">
+             <img class="img-rounded" ng-src="{{reserva.vuelo.aerolinea.url}}" alt="Image not found">
         </div>
         <div class="col-xs-6">
-            <h4 class="bold">{{auto.marca}} {{auto.modelo}}</h4>
-            <div>{{auto.agencia.nombre}}</div>
-            <p class="disponibilidad"> Quedan disponibles {{auto.cantidadDisponible}} de {{auto.cantidadTotal}} modelos</p>
+            <h4><span class="bold">Salida:</span> {{reserva.vuelo.fechaSalida| date:'medium'}} - {{reserva.vuelo.ciudadOrigen.nombre}}</h4>
+            <h4><span class="bold">Llegada:</span> {{reserva.vuelo.fechaLlegada| date:'medium'}} - {{reserva.vuelo.ciudadDestino.nombre}}</h4>
+            <div>{{reserva.vuelo.aerolinea.name}}</div>
+            <p class="disponibilidad"> Quedan disponibles {{reserva.vuelo.cantPasajerosDisp}} de {{reserva.vuelo.cantPasajeros}} asientos</p>
 
         </div>
         <div class="col-xs-3 align-center">
             <div class="precio-container">
                 <div>Por sólo</div>
-                <div class="precio-font">${{auto.monto}}</div>
+                <div class="precio-font">${{reserva.vuelo.precio}}</div>
                 <div> por día</div>
             </div>
-            <button class="btn btn-info btn-form" ng-click="agregarAlCarrito()" ng-show="false"> Agregar al Carrito </button>
-            <button class="btn btn-danger btn-form" ng-click="quitarDelCarrito()" ng-show="true"> Quitar del Carrito </button>
+            <button class="btn btn-danger btn-form" ng-click="quitarVueloDelCarrito(reserva)"> Quitar del Carrito </button>
         </div>
         <hr/>
     </div>
 </div>
+<div class="resultado-container">
+    <h4 class="bold" style="margin-bottom: 30px;"> Mis Reservas de Hoteles ({{paquete.reservaHotel.length}})</h4>
+    <div class="row resultado-single" ng-repeat="reserva in paquete.reservaHotel">
+        <div class="thumbnail col-xs-3">
+             <img class="img-rounded" ng-src="{{reserva.hotel.url}}" alt="Image not found">
+        </div>
+        <div class="col-xs-6">
+            <h4 class="bold">{{reserva.hotel.nombre}}</h4>
+            <div>{{reserva.hotel.direccion}}</div>
+            <div>{{reserva.hotel.estrellas}} Estrellas</div>
+            <p class="disponibilidad"> Quedan disponibles {{reserva.hotel.cantidadHabitacionesDisponibles}} de {{reserva.hotel.cantidadHabitaciones}} habitaciones</p>
+
+        </div>
+        <div class="col-xs-3 align-center">
+            <div class="precio-container">
+                <div>Por sólo</div>
+                <div class="precio-font">${{reserva.hotel.monto}}</div>
+                <div> por día</div>
+            </div>
+            <button class="btn btn-danger btn-form" ng-click="quitarHotelDelCarrito(reserva)"> Quitar del Carrito </button>
+        </div>
+        <hr/>
+    </div>
+</div>
+<div class="resultado-container">
+    <h4 class="bold" style="margin-bottom: 30px;"> Mis Reservas de Vehiculos ({{paquete.reservaAuto.length}})</h4>
+    <div class="row resultado-single" ng-repeat="reserva in paquete.reservaAuto">
+        <div class="thumbnail col-xs-3">
+             <img class="img-rounded" ng-src="{{reserva.auto.url}}" alt="Image not found">
+        </div>
+        <div class="col-xs-6">
+            <h4 class="bold">{{reserva.auto.marca}} {{reserva.auto.modelo}}</h4>
+            <div>{{reserva.auto.agencia.nombre}}</div>
+            <div> Lugar Retiro: {{reserva.lugarRetiro.nombre}}, {{reserva.lugarRetiro.pais}}</div>
+            <div> Lugar Devolucion: {{reserva.lugarDevolucion.nombre}}, {{reserva.lugarDevolucion.pais}}</div>
+        </div>
+        <div class="col-xs-3 align-center">
+            <div class="precio-container">
+                <div>Por sólo</div>
+                <div class="precio-font">${{reserva.auto.monto}}</div>
+                <div> por día</div>
+            </div>
+            <button class="btn btn-danger btn-form" ng-click="quitarAutoDelCarrito(reserva)"> Quitar del Carrito </button>
+        </div>
+        <hr/>
+    </div>
+</div>
+<button class="btn btn-form" ng-click="pagar()"> Pagar </button>

@@ -4,24 +4,24 @@ var mongoose = require('mongoose');
 var Vuelo = require('../model/vueloModel.js');
 var Aerolinea = require('../model/aerolineaModel.js');
 
-router.get('/:fecha/:origen/:destino/:aerolineaId', function(req, res, next) { 
+router.get('/:fecha/:origen/:destino/:aerolineaId', function(req, res, next) {
     var partesFecha = req.params.fecha.split('-');
-    fechaComienzo = new Date(partesFecha[2],partesFecha[1]-1,partesFecha[0]); 
-    fechaFin = new Date(partesFecha[2],partesFecha[1]-1,partesFecha[0]); 
+    fechaComienzo = new Date(partesFecha[2],partesFecha[1]-1,partesFecha[0]);
+    fechaFin = new Date(partesFecha[2],partesFecha[1]-1,partesFecha[0]);
     fechaFin.setDate(fechaFin.getDate() + 1);
     if (req.params.aerolineaId == "99") {
-    	Vuelo.find({fechaSalida: {$gt: fechaComienzo, $lt:fechaFin}, cantPasajerosDisp: {$gt: 0}}, {"ciudadOrigen": req.params.origen}, {"ciudadDestino": req.params.destino}).populate('aerolinea ciudadOrigen ciudadDestino').select('fechaSalida fechaLlegada cantPasajerosDisp cantPasajeros precio').exec(function (err, response) {
-       		if (err) return next(err);
-       		res.json(response);
-		});
+     Vuelo.find({fechaSalida: {$gt: fechaComienzo, $lt:fechaFin}, cantPasajerosDisp: {$gt: 0}}, {"ciudadOrigen": req.params.origen}, {"ciudadDestino": req.params.destino}).populate('aerolinea ciudadOrigen ciudadDestino').select('fechaSalida fechaLlegada cantPasajerosDisp cantPasajeros precio').exec(function (err, response) {
+         if (err) return next(err);
+         res.json(response);
+     })
     }
     else {
-    	Vuelo.find({"aerolinea" : req.params.aerolineaId}, {fechaSalida: {$gt: fechaComienzo, $lt:fechaFin}, cantPasajerosDisp: {$gt: 0}}, {"ciudadOrigen": req.params.origen}, {"ciudadDestino": req.params.destino}).populate('aerolinea ciudadOrigen ciudadDestino').select('fechaSalida fechaLlegada cantPasajerosDisp cantPasajeros precio').exec(function (err, response) {
-	       console.log("Se recibio aeroloinea");
-	       console.log(req.params.aerolineaId);
-	       if (err) return next(err);
-	       res.json(response);
-		});
+     Vuelo.find({fechaSalida: {$gt: fechaComienzo, $lt:fechaFin}, cantPasajerosDisp: {$gt: 0}}, {"ciudadOrigen": req.params.origen}, {"ciudadDestino": req.params.destino}).populate('aerolinea ciudadOrigen ciudadDestino').select('fechaSalida fechaLlegada cantPasajerosDisp cantPasajeros precio').exec(function (err, response) {
+        console.log("Se recibio aeroloinea");
+        console.log(req.params.aerolineaId);
+        if (err) return next(err);
+        res.json(response);
+    });
     }
 });
 

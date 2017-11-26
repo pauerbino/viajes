@@ -27,7 +27,7 @@
 
     <!-- Add your site or application content here -->
     <div class="header">
-      <h1 style="text-align: center; font-weight: bold">Viajes</h1>
+      <h2 style="text-align: center;color:#46b8da" class="bold">Bienvenido a Viajes!</h2>
 
        <div class="navbar navbar-default" role="navigation">
         <div class="container">
@@ -44,15 +44,15 @@
           <div class="collapse navbar-collapse" id="js-navbar-collapse"  ng-controller='MainCtrl' >
 
             <ul class="nav navbar-nav">
-              <li><a href="#!/home" ng-show="!isLoggedIn">Who are we?</a></li>
-              <li><a ng-href="#!/login" ng-show="!isLoggedIn">Log In</a></li>
-              <li><a ng-href="#!/signin" ng-show="!isLoggedIn">Sign In</a></li>
-              <li><a ng-href="#!/logOut" ng-show="isLoggedIn">Log Out</a></li>
+              <li><a href="#!/home" ng-show="!isLoggedIn">Inicio</a></li>
+              <li><a ng-href="#!/login" ng-show="!isLoggedIn">Iniciar Sesión</a></li>
+              <li><a ng-href="#!/signin" ng-show="!isLoggedIn">Registrarme</a></li>
+              <li><a ng-href="#!/logOut" ng-show="isLoggedIn">Salir</a></li>
             </ul>
           </div>
         </div>
       </div>
-    </div> 
+    </div>
 
         <div ng-view=""></div>
     </div>
@@ -83,8 +83,11 @@
     <!-- endbuild -->
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/busquedaAutoSinUser.controller.js"></script>
         <script src="scripts/controllers/busquedaAuto.controller.js"></script>
+        <script src="scripts/controllers/busquedaHotelSinUser.controller.js"></script>
         <script src="scripts/controllers/busquedaHotel.controller.js"></script>
+        <script src="scripts/controllers/busquedaVueloSinUser.controller.js"></script>
         <script src="scripts/controllers/busquedaVuelo.controller.js"></script>
         <script src="scripts/controllers/home.controller.js"></script>
         <script src="scripts/controllers/login.controller.js"></script>
