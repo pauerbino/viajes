@@ -8,6 +8,7 @@ angular.module('viajesApp')
     $scope.ciudad = {};
     $scope.resultadoBusqueda = [];
     $scope.idPaquete = $routeParams.idPaquete;
+    $scope.paquete = null;
 
     function initialize() {
         CiudadService.getCiudades().then(function(response){
@@ -23,23 +24,30 @@ angular.module('viajesApp')
 
     $scope.buscar = function() {
         $scope.resultadoBusqueda = [];
-        console.log($scope.busqueda.fechaIngreso);
-        console.log($scope.busqueda);
-        console.log($filter('date')($scope.busqueda.fechaIngreso, "dd/MM/yyyy"));
-        HotelService.reset();
         if (($scope.busqueda.destino) && ($scope.busqueda.estrellas)){
-            HotelService.getHoteles($scope.busqueda.destino._id, $scope.busqueda.estrellas).then(function(response){
-                $scope.resultadoBusqueda = response;
+            PaqueteService.reset();
+            PaqueteService.getPaquete($scope.idPaquete).then(function(response){
+                $scope.paquete = response;
+                HotelService.reset();
+                HotelService.getHoteles($scope.busqueda.destino._id, $scope.busqueda.estrellas).then(function(response){
+
+                    // for (var i = 0; i < response.length; i++) {
+                    //     response[i].enCarrito = $scope.paquete.reservaHotel.filter(function(obj) {
+                    //         return obj.hotel === response[i]._id;
+                    //     })[0];
+                    // }
+                    // console.log(response);
+                    $scope.resultadoBusqueda = response;
+                });
             });
         }
     };
 
     $scope.agregarAlCarrito = function(hotel) {
         PaqueteService.nuevaReservaHotel($scope.idPaquete, hotel._id, hotel.monto).then(function(response){
-            console.log(response);
+            // hotel.enCarrito = true;
             PaqueteService.reset();
             PaqueteService.getPaquete($scope.idPaquete).then(function(resp){
-                console.log(resp);
             });
         });
     };
