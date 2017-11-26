@@ -1,6 +1,6 @@
 'use strict';
 angular.module('viajesApp')
-  .controller('BusquedaAutoCtrl', ['$location', '$routeParams', '$scope', '$filter', 'AutoService', 'CiudadService', function ( $location, $routeParams, $scope, $filter, AutoService, CiudadService) {
+  .controller('BusquedaAutoCtrl', ['$location', '$routeParams', '$scope', '$filter', 'AutoService', 'CiudadService', 'PaqueteService', function ( $location, $routeParams, $scope, $filter, AutoService, CiudadService, PaqueteService) {
 
     $scope.autos = [];
     $scope.busqueda = {};

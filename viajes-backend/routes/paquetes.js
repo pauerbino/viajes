@@ -3,6 +3,8 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Paquete = require('../model/paqueteModel.js');
 var ReservaHotel = require('../model/reservaHotelModel.js');
+var ReservaVuelo = require('../model/reservaVueloModel.js');
+var ReservaAuto = require('../model/reservaAutoModel.js');
 
 
 
@@ -14,7 +16,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-    Paquete.findById(req.params.id).exec(function(err, paquete) {
+    Paquete.findById(req.params.id).populate('reservaVuelo').populate('reservaHotel').populate('reservaAuto').exec(function(err, paquete) {
         if (err) return next(err);
         res.json(paquete);
     });
