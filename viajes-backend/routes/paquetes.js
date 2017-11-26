@@ -19,7 +19,7 @@ router.get('/:id', function(req, res, next) {
     Paquete.findById(req.params.id).populate({
         path: 'reservaVuelo',
         populate: { path: 'vuelo',
-            populate:  { path: 'aerolinea'}
+            populate:  [{ path: 'aerolinea'},{ path: 'ciudadOrigen'}]
         }
       }).populate({
         path: 'reservaHotel',

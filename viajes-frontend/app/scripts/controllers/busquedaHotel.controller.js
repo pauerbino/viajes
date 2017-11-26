@@ -22,8 +22,8 @@ angular.module('viajesApp')
         $scope.resultadoBusqueda = [];
         if (($scope.busqueda.destino) && ($scope.busqueda.estrellas)){
             PaqueteService.reset();
-            PaqueteService.getPaquete($scope.idPaquete).then(function(response){
-                $scope.paquete = response;
+            PaqueteService.getPaquete($scope.idPaquete).then(function(resp){
+                $scope.paquete = resp;
                 HotelService.reset();
                 HotelService.getHoteles($scope.busqueda.destino._id, $scope.busqueda.estrellas).then(function(response){
 
