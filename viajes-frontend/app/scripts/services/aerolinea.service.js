@@ -1,27 +1,27 @@
 'use strict';
 angular.module('viajesApp')
-    .service('VueloService', ['$http', '$q', 'Configuration', function ($http, $q, Configuration) {
+    .service('AerolineaService', ['$http', '$q', 'Configuration', function ($http, $q, Configuration) {
         var service = {};
         var cache = {
-            vuelos: null
+            aerolineas: null
         };
 
         service.reset = function() {
             cache = {
-                vuelos: null
+                aerolineas: null
             };
         };
 
-        service.getVuelos = function(origen, destino, fecha, aerolineaId) {
+        service.getAerolineas = function() {
             var deferred = $q.defer();
-            if (cache.vuelos) {
-                deferred.resolve(cache.vuelos);
+            if (cache.aerolineas) {
+                deferred.resolve(cache.aerolineas);
             } else {
                 $http({
                     method: 'GET',
-                    url: Configuration.getConfiguration().baseURL + '/vuelos/'+ fecha +'/'+ origen + '/' + destino + '/' + aerolineaId
+                    url: Configuration.getConfiguration().baseURL + '/aerolineas'
                 }).then(function (response) {
-                    cache.vuelos = response.data;
+                    cache.aerolineas = response.data;
                     deferred.resolve(response.data);
                 }).catch(function (response) {
                     deferred.reject(response);
@@ -31,11 +31,11 @@ angular.module('viajesApp')
             return deferred.promise;
         };
 
-        service.getVuelo = function(id) {
+        service.getAerolinea = function(id) {
             var deferred = $q.defer();
             $http({
                 method: 'GET',
-                url: Configuration.getConfiguration().baseURL + '/vuelos/' + id
+                url: Configuration.getConfiguration().baseURL + '/aerolineas/' + id
             }).then(function (response) {
                 deferred.resolve(response.data);
             }).catch(function (response) {
