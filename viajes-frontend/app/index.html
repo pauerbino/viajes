@@ -29,7 +29,7 @@
     <div class="header">
       <h1 style="text-align: center; font-weight: bold">Viajes</h1>
 
-<!--       <div class="navbar navbar-default" role="navigation">
+       <div class="navbar navbar-default" role="navigation">
         <div class="container">
           <div class="navbar-header">
 
@@ -45,7 +45,6 @@
 
             <ul class="nav navbar-nav">
               <li><a href="#!/home" ng-show="!isLoggedIn">Who are we?</a></li>
-              <li><a href="#!/lists" ng-show="isLoggedIn">Lists</a></li>
               <li><a ng-href="#!/login" ng-show="!isLoggedIn">Log In</a></li>
               <li><a ng-href="#!/signin" ng-show="!isLoggedIn">Sign In</a></li>
               <li><a ng-href="#!/logOut" ng-show="isLoggedIn">Log Out</a></li>
@@ -53,7 +52,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div> 
 
         <div ng-view=""></div>
     </div>
@@ -94,6 +93,7 @@
         <script src="scripts/controllers/signin.controller.js"></script>
         <script src="scripts/controllers/main.controller.js"></script>
 
+        <script src="scripts/services/aerolinea.service.js"></script>
         <script src="scripts/services/auto.service.js"></script>
         <script src="scripts/services/ciudad.service.js"></script>
         <script src="scripts/services/configuration.service.js"></script>

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('viajesApp')
-  .controller('BusquedaAutoCtrl', ['$location', '$routeParams', '$scope', '$filter', 'AutoService', 'CiudadService', 'PaqueteService', function ( $location, $routeParams, $scope, $filter, AutoService, CiudadService, PaqueteService) {
+  .controller('BusquedaAutoCtrl', ['$location', '$routeParams', '$scope', '$filter', 'AutoService', 'CiudadService', 'UserService', 'PaqueteService', function ( $location, $routeParams, $scope, $filter, AutoService, CiudadService, UserService, PaqueteService) {
 
     $scope.autos = [];
     $scope.busqueda = {};
@@ -17,6 +17,10 @@ angular.module('viajesApp')
     }
 
     initialize();
+
+    $scope.isLoggedIn = function() {
+        return UserService.isLoggedIn();
+    }
 
     $scope.buscar = function() {
         $scope.resultadoBusqueda = [];
