@@ -8,13 +8,57 @@ var ReservaAuto = require('../model/reservaAutoModel.js');
 var Vuelo = require('../model/vueloModel.js');
 var Auto = require('../model/autoModel.js');
 var Hotel = require('../model/hotelModel.js');
-
-
+var User = require('../model/userModel.js');
 
 router.get('/', function(req, res, next) {
     Paquete.find(function (err, response) {
         if (err) return next(err);
         res.json(response);
+    });
+});
+
+router.get('/habilitado/:email', function(req, res, next) {
+    console.log("se buscara paquete actual o se creara uno en su defecto");
+    User.find({"email": req.params.email}).exec(function(err,u) {
+        Paquete.find({"usuario" : u[0]._id, "pagado": false}).populate({
+            path: 'reservaVuelo',
+            populate: { path: 'vuelo',
+                populate:  [{ path: 'aerolinea'},{ path: 'ciudadOrigen'},{ path: 'ciudadDestino'}]
+            }
+        }).populate({
+            path: 'reservaHotel',
+            populate: { path: 'hotel',
+                populate: { path: 'ciudad'}
+            }
+        }).populate({
+            path: 'reservaAuto',
+            populate: [{ path: 'auto', populate: {path: 'agencia'} },{ path: 'lugarRetiro' }, { path: 'lugarDevolucion' }]
+        }).exec(function(err, paquete) {
+            if (err) return next(err);
+            if (paquete.length > 0) {
+                console.log("se devuelve el paquete actual que no esta pagado");
+                console.log(paquete[0]);
+                res.json(paquete[0]);
+            }
+            else {
+                console.log("no tiene paquete por lo que se crea uno");
+                console.log(u[0]);
+                var newPaquete = new Paquete ({
+                    usuario: u[0]._id,
+                    reservaAuto: [], 
+                    reservaHotel: [],
+                    reservaVuelo: [],
+                    pagado: false
+                });
+                console.log(newPaquete);
+                newPaquete.save(function(err) {
+                    if (err) throw err;
+                    console.log("se creo el paquete");
+                    console.log(newPaquete);
+                    res.json(newPaquete);
+                });
+            }
+        });
     });
 });
 
@@ -50,6 +94,7 @@ router.post('/ReservaHotel', function(req, res, next) {
 
     Paquete.findById(req.body.idPaquete).exec(function(err, paquete) {
         if (err) return next(err);
+        paquete.montoTotal = paquete.montoTotal + req.body.monto;
         paquete.reservaHotel.push(nuevaReserva);
         paquete.save(function(err) {
             if (err) throw err;
@@ -71,6 +116,7 @@ router.post('/ReservaVuelo', function(req, res, next) {
 
     Paquete.findById(req.body.idPaquete).exec(function(err, paquete) {
         if (err) return next(err);
+        paquete.montoTotal = paquete.montoTotal + req.body.monto;
         paquete.reservaVuelo.push(nuevaReserva);
         paquete.save(function(err) {
             if (err) throw err;
@@ -80,11 +126,23 @@ router.post('/ReservaVuelo', function(req, res, next) {
 });
 
 router.post('/ReservaAuto', function(req, res, next) {
+    var partesFechaRetiro = req.body.fechaRetiro.split('-');
+    var partesFechaDevolucion = req.body.fechaDevolucion.split('-');
+    var fechaComienzo = new Date(partesFechaRetiro[2],partesFechaRetiro[1]-1,partesFechaRetiro[0]); 
+    var fechaFin = new Date(partesFechaDevolucion[2],partesFechaDevolucion[1]-1,partesFechaDevolucion[0]);
+    var fechaComienzoParaContar = new Date(partesFechaRetiro[2],partesFechaRetiro[1]-1,partesFechaRetiro[0]); 
+    var cantDias = 0;
+    for (var d = fechaComienzoParaContar; d <= fechaFin; d.setDate(d.getDate() + 1)) {
+        cantDias++;
+    }
+    var montoTotal = req.body.monto * cantDias;
     var nuevaReserva = new ReservaAuto ({
         auto: req.body.auto,
-        monto: req.body.monto,
+        monto: montoTotal,
         lugarRetiro: req.body.lugarRetiro,
-        lugarDevolucion: req.body.lugarDevolucion
+        lugarDevolucion: req.body.lugarDevolucion,
+        fechaRetiro: fechaComienzo,
+        fechaDevolucion: fechaFin
     });
 
     nuevaReserva.save(function(err) {
@@ -93,6 +151,7 @@ router.post('/ReservaAuto', function(req, res, next) {
 
     Paquete.findById(req.body.idPaquete).exec(function(err, paquete) {
         if (err) return next(err);
+        paquete.montoTotal = paquete.montoTotal + montoTotal;
         paquete.reservaAuto.push(nuevaReserva);
         paquete.save(function(err) {
             if (err) throw err;
@@ -118,10 +177,22 @@ router.post('/ReservaAuto', function(req, res, next) {
 
 router.put('/pagar/:id', function(req, res, next) {
     Paquete.findById(req.params.id).populate('reservaVuelo reservaHotel reservaAuto').exec(function(err, paquete) {
+        console.log(paquete);
+        var fecha;
+        var fechasReservadas;
+        var fechaComienzo;
+        var fechaFin;
         for (var i = 0; i < paquete.reservaAuto.length; i++) {
+            fechaComienzo = paquete.reservaAuto[i].fechaRetiro;
+            fechaFin = paquete.reservaAuto[i].fechaDevolucion;
+            fechasReservadas = [];
             Auto.findById(paquete.reservaAuto[i].auto).exec(function(err, auto) {
-                //Hacer reserva
-                //TODO
+                fechasReservadas = auto.fechasReservadas;
+                for (var d = fechaComienzo; d <= fechaFin; d.setDate(d.getDate() + 1)) {
+                    fecha = (("0" + d.getDate()).slice(-2)) + "/" + (("0" + (d.getMonth() + 1)).slice(-2)) + "/" + d.getFullYear();
+                    fechasReservadas.push(fecha);
+                }
+                auto.fechasReservadas = fechasReservadas;
                 auto.save(function(err) {
                     if (err) throw err;
                 });
@@ -148,6 +219,7 @@ router.put('/pagar/:id', function(req, res, next) {
 
         if (err) return next(err);
         paquete.pagado = true;
+        paquete.fechaPago = new Date();
         paquete.save(function(err) {
             if (err) throw err;
             res.json(paquete);
@@ -155,11 +227,81 @@ router.put('/pagar/:id', function(req, res, next) {
     });
 });
 
-// router.delete('/:id', function(req, res, next) {
-//     List.findByIdAndRemove(req.params.id, req.body, function (err, post) {
-//         if (err) return next(err);
-//         res.json(post);
-//     });
-// });
+router.delete('/quitarVuelo/:idReserva/:idPaquete', function(req, res, next) {
+    var monto;
+    ReservaVuelo.findByIdAndRemove(req.params.idReserva, req.body, function (err, post) {
+        if (err) return next(err);
+        monto = post.monto;
+        var reservasVuelo = [];
+        var index;
+        Paquete.findById(req.params.idPaquete).exec(function(err, paquete) {
+            if (err) return next(err);
+            reservasVuelo = paquete.reservaVuelo;
+            index = reservasVuelo.indexOf(req.params.idReserva);
+            if (index > -1) {
+                reservasVuelo.splice(index, 1);
+            }
+            paquete.reservaVuelo = reservasVuelo;
+            console.log(paquete.montoTotal);
+            console.log(monto);
+            paquete.montoTotal = paquete.montoTotal - monto;
+            paquete.save(function(err) {
+                if (err) throw err;
+                res.json(paquete);
+            });
+        }); 
+    });
+});
+
+router.delete('/quitarAuto/:idReserva/:idPaquete', function(req, res, next) {
+    var monto;
+    ReservaAuto.findByIdAndRemove(req.params.idReserva, req.body, function (err, post) {
+         if (err) return next(err);
+         monto = post.monto;
+         var reservasAutos = [];
+        var index;
+        Paquete.findById(req.params.idPaquete).exec(function(err, paquete) {
+            if (err) return next(err);
+            reservasAutos = paquete.reservaAuto;
+            index = reservasAutos.indexOf(req.params.idReserva);
+            if (index > -1) {
+                reservasAutos.splice(index, 1);
+            }
+            paquete.reservaAuto = reservasAutos;
+            console.log(paquete.montotTotal);
+            console.log(monto);
+            paquete.montoTotal = paquete.montoTotal - monto;
+            paquete.save(function(err) {
+                if (err) throw err;
+                res.json(paquete);
+            });
+        }); 
+    });
+});
+
+
+router.delete('/quitarHotel/:idReserva/:idPaquete', function(req, res, next) {
+    var monto;
+    ReservaHotel.findByIdAndRemove(req.params.idReserva, req.body, function (err, post) {
+        if (err) return next(err);
+        monto = post.monto;
+        var reservasHotel = [];
+        var index;
+        Paquete.findById(req.params.idPaquete).exec(function(err, paquete) {
+            if (err) return next(err);
+            reservasHotel = paquete.reservaHotel;
+            index = reservasHotel.indexOf(req.params.idReserva);
+            if (index > -1) {
+                reservasHotel.splice(index, 1);
+            }
+            paquete.reservaHotel = reservasHotel;
+            paquete.montoTotal = paquete.montoTotal - monto;
+            paquete.save(function(err) {
+                if (err) throw err;
+                res.json(paquete);
+            });
+        }); 
+    });
+});
 
 module.exports = router;

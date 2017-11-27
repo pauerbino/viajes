@@ -35,7 +35,9 @@ angular.module('viajesApp')
     };
 
     $scope.agregarAlCarrito = function(auto) {
-        PaqueteService.nuevaReservaAuto($scope.idPaquete, auto._id, auto.monto, $scope.busqueda.lugarRetiro._id, $scope.busqueda.lugarDevolucion._id).then(function(response){
+        var fechaRetiro = $filter('date')($scope.busqueda.fechaRetiro, "dd-MM-yyyy");
+        var fechaDevolucion = $filter('date')($scope.busqueda.fechaDevolucion, "dd-MM-yyyy");
+        PaqueteService.nuevaReservaAuto($scope.idPaquete, auto._id, auto.monto, $scope.busqueda.lugarRetiro._id, $scope.busqueda.lugarDevolucion._id, fechaRetiro, fechaDevolucion).then(function(response){
             console.log(response);
             PaqueteService.reset();
             PaqueteService.getPaquete($scope.idPaquete).then(function(resp){

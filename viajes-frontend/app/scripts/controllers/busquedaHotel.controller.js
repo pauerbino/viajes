@@ -48,6 +48,12 @@ angular.module('viajesApp')
     };
 
     $scope.agregarAlCarrito = function(hotel) {
+        PaqueteService.nuevaReservaHotel($scope.idPaquete, hotel._id, hotel.monto).then(function(response){
+            PaqueteService.reset();
+            PaqueteService.getPaquete($scope.idPaquete).then(function(resp){
+                console.log(resp);
+            });
+        });
         // response[i].enCarrito = $scope.paquete.reservaHotel.filter(function(obj) {
         //                     return obj.hotel === response[i]._id;
         //                 })[0];

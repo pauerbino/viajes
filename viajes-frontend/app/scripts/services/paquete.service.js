@@ -87,14 +87,16 @@ angular.module('viajesApp')
             return deferred.promise;
         };
 
-        service.nuevaReservaAuto = function(idPaquete, auto, monto, lugarRetiro, lugarDevolucion) {
+        service.nuevaReservaAuto = function(idPaquete, auto, monto, lugarRetiro, lugarDevolucion, fechaRetiro, fechaDevolucion) {
             var deferred = $q.defer();
             var body = {
                 idPaquete: idPaquete,
                 auto: auto,
                 monto: monto,
                 lugarRetiro: lugarRetiro,
-                lugarDevolucion: lugarDevolucion
+                lugarDevolucion: lugarDevolucion,
+                fechaRetiro: fechaRetiro,
+                fechaDevolucion: fechaDevolucion
             };
 
             $http({
@@ -126,19 +128,59 @@ angular.module('viajesApp')
             return deferred.promise;
         }
 
-        service.getPaqueteActual = function() {
+        service.getPaqueteActual = function(email) {
             //Tiene que tomar el paquete del usuario logueado que tenga pagar en false, si no tiene deberia venir vacio y crearse uno
             var deferred = $q.defer();
-            // $http({
-            //     method : 'PUT',
-            //     url : Configuration.getConfiguration().baseURL + '/paquetes/pagar/'+idPaquete,
-            //     data: {}
-            // }).then(function(response) {
-                // deferred.resolve(response);
-                deferred.resolve('5a18630b5264222a9e7afb36');
-            // }).catch(function(response) {
-            //     deferred.reject(response);
-            // });
+            $http({
+                 method : 'GET',
+                 url : Configuration.getConfiguration().baseURL + '/paquetes/habilitado/' + email
+            }).then(function(response) {
+                 deferred.resolve(response.data);
+            }).catch(function(response) {
+                 deferred.reject(response);
+            });
+
+            return deferred.promise;
+        }
+
+        service.quitarVueloDelPaquete = function(idReserva, idPaquete) {
+            var deferred = $q.defer();
+            $http({
+                 method : 'DELETE',
+                 url : Configuration.getConfiguration().baseURL + '/paquetes/quitarVuelo/' + idReserva + '/' + idPaquete
+            }).then(function(response) {
+                 deferred.resolve(response.data);
+            }).catch(function(response) {
+                 deferred.reject(response);
+            });
+
+            return deferred.promise;
+        }
+
+        service.quitarHotelDelPaquete = function(idReserva, idPaquete) {
+            var deferred = $q.defer();
+            $http({
+                 method : 'DELETE',
+                 url : Configuration.getConfiguration().baseURL + '/paquetes/quitarHotel/' + idReserva + '/' + idPaquete
+            }).then(function(response) {
+                 deferred.resolve(response.data);
+            }).catch(function(response) {
+                 deferred.reject(response);
+            });
+
+            return deferred.promise;
+        }
+
+        service.quitarAutoDelPaquete = function(idReserva, idPaquete) {
+            var deferred = $q.defer();
+            $http({
+                 method : 'DELETE',
+                 url : Configuration.getConfiguration().baseURL + '/paquetes/quitarAuto/' + idReserva + '/' + idPaquete
+            }).then(function(response) {
+                 deferred.resolve(response.data);
+            }).catch(function(response) {
+                 deferred.reject(response);
+            });
 
             return deferred.promise;
         }

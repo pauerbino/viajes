@@ -55,6 +55,16 @@ angular
         controller: 'MiCarritoCtrl',
         controllerAs: 'vm'
     })
+    .when('/miCarrito', {
+        templateUrl: 'views/miCarrito.html',
+        controller: 'MiCarritoCtrl',
+        controllerAs: 'vm'
+    })
+    .when('/misReservas', {
+        templateUrl: 'views/misPaquetes.html',
+        controller: 'MisPaquetesCtrl',
+        controllerAs: 'vm'
+    })
     .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
