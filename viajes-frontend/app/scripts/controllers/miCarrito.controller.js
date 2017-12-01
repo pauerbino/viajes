@@ -7,13 +7,13 @@ angular.module('viajesApp')
     $scope.ciudades = [];
     $scope.ciudad = {};
     $scope.resultadoBusqueda = [];
-    $scope.idPaquete; // = $routeParams.idPaquete;
+    $scope.idPaquete = null; 
     $scope.paquete = null;
 
     $scope.currentUser = {
         email : "",
         name : ""
-    }
+    };
 
     function initialize() {
         if (UserService.isLoggedIn()) {
@@ -44,10 +44,10 @@ angular.module('viajesApp')
     initialize();
 
     $scope.pagar = function() {
-        PaqueteService.pagarPaquete($scope.idPaquete).then(function(response){
+        PaqueteService.pagarPaquete($scope.idPaquete).then(function(){
             initialize();
         });
-    }
+    };
 
     $scope.buscarAutos = function() {
         if (UserService.isLoggedIn()) {
@@ -57,8 +57,8 @@ angular.module('viajesApp')
             });
         } else {
             $location.path('/busquedaAuto');
-        };
-    }
+        }
+    };
 
     $scope.buscarHoteles = function() {
         if (UserService.isLoggedIn()) {
@@ -68,8 +68,8 @@ angular.module('viajesApp')
             });
         } else {
             $location.path('/busquedaHotel');
-        };
-    }
+        }
+    };
 
     $scope.buscarVuelos = function() {
         if (UserService.isLoggedIn()) {
@@ -79,25 +79,25 @@ angular.module('viajesApp')
             });
         } else {
             $location.path('/busquedaVuelo');
-        };
-    }
+        }
+    };
 
     $scope.quitarVueloDelCarrito = function(reserva) {
-        PaqueteService.quitarVueloDelPaquete(reserva._id, $scope.idPaquete).then(function(response){
+        PaqueteService.quitarVueloDelPaquete(reserva._id, $scope.idPaquete).then(function(){
             initialize();
         });
-    }
+    };
 
     $scope.quitarHotelDelCarrito = function(reserva) {
-        PaqueteService.quitarHotelDelPaquete(reserva._id, $scope.idPaquete).then(function(response){
+        PaqueteService.quitarHotelDelPaquete(reserva._id, $scope.idPaquete).then(function(){
             initialize();
         });
-    }
+    };
 
     $scope.quitarAutoDelCarrito = function(reserva) {
-        PaqueteService.quitarAutoDelPaquete(reserva._id, $scope.idPaquete).then(function(response){
+        PaqueteService.quitarAutoDelPaquete(reserva._id, $scope.idPaquete).then(function(){
             initialize();
         });
-    }
+    };
 
   }]);

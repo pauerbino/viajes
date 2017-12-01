@@ -8,7 +8,7 @@ angular.module('viajesApp')
     $scope.currentUser = {
         email : "",
         name : ""
-    }
+    };
 
     function initialize() {
         $scope.isLoggedIn = UserService.isLoggedIn();
@@ -23,8 +23,8 @@ angular.module('viajesApp')
             });
         } else {
             $location.path('/busquedaAuto');
-        };
-    }
+        }
+    };
 
     $scope.buscarHoteles = function() {
         if ($scope.isLoggedIn) {
@@ -35,8 +35,8 @@ angular.module('viajesApp')
             });
         } else {
             $location.path('/busquedaHotel');
-        };
-    }
+        }
+    };
 
     $scope.buscarVuelos = function() {
         if ($scope.isLoggedIn) {
@@ -47,8 +47,8 @@ angular.module('viajesApp')
             });
         } else {
             $location.path('/busquedaVuelo');
-        };
-    }
+        }
+    };
 
     initialize();
 

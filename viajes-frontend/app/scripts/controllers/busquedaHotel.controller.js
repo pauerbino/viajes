@@ -20,7 +20,7 @@ angular.module('viajesApp')
 
     $scope.isLoggedIn = function() {
         return UserService.isLoggedIn();
-    }
+    };
 
     $scope.buscar = function() {
         $scope.resultadoBusqueda = [];
@@ -48,11 +48,13 @@ angular.module('viajesApp')
     };
 
     $scope.agregarAlCarrito = function(hotel) {
-        PaqueteService.nuevaReservaHotel($scope.idPaquete, hotel._id, hotel.monto).then(function(response){
+        var fechaIngreso = $filter('date')($scope.busqueda.fechaIngreso, "dd-MM-yyyy");
+        var fechaSalida = $filter('date')($scope.busqueda.fechaSalida, "dd-MM-yyyy");
+        PaqueteService.nuevaReservaHotel($scope.idPaquete, hotel._id, hotel.monto, fechaIngreso, fechaSalida).then(function(){
             PaqueteService.reset();
-            PaqueteService.getPaquete($scope.idPaquete).then(function(resp){
-                console.log(resp);
-            });
+            // PaqueteService.getPaquete($scope.idPaquete).then(function(resp){
+            //     console.log(resp);
+            // });
         });
         // response[i].enCarrito = $scope.paquete.reservaHotel.filter(function(obj) {
         //                     return obj.hotel === response[i]._id;

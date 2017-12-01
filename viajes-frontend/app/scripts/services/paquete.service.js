@@ -12,7 +12,21 @@ angular.module('viajesApp')
             };
         };
 
-        service.getPaquetes = function(destino, estrellas) {
+        service.getMisPaquetes = function(email) {
+            var deferred = $q.defer();
+            $http({
+                method: 'GET',
+                url: Configuration.getConfiguration().baseURL + '/paquetes/' + email 
+            }).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        };
+
+        service.getPaquetes = function() {
             var deferred = $q.defer();
             if (cache.paquete) {
                 deferred.resolve(cache.paquete);
@@ -32,10 +46,12 @@ angular.module('viajesApp')
         };
 
         service.getPaquete = function(id) {
+            console.log("En el servicio");
+            console.log(id);
             var deferred = $q.defer();
             $http({
                 method: 'GET',
-                url: Configuration.getConfiguration().baseURL + '/paquetes/' + id
+                url: Configuration.getConfiguration().baseURL + '/paquetes/miPaquete/' + id
             }).then(function (response) {
                 deferred.resolve(response.data);
             }).catch(function (response) {
@@ -45,12 +61,14 @@ angular.module('viajesApp')
             return deferred.promise;
         };
 
-        service.nuevaReservaHotel = function(idPaquete, hotel, monto) {
+        service.nuevaReservaHotel = function(idPaquete, hotel, monto, fechaIngreso, fechaSalida) {
             var deferred = $q.defer();
             var body = {
                 idPaquete: idPaquete,
                 hotel: hotel,
-                monto: monto
+                monto: monto,
+                fechaIngreso: fechaIngreso,
+                fechaSalida: fechaSalida
             };
 
             $http({
@@ -126,7 +144,7 @@ angular.module('viajesApp')
             });
 
             return deferred.promise;
-        }
+        };
 
         service.getPaqueteActual = function(email) {
             //Tiene que tomar el paquete del usuario logueado que tenga pagar en false, si no tiene deberia venir vacio y crearse uno
@@ -141,7 +159,7 @@ angular.module('viajesApp')
             });
 
             return deferred.promise;
-        }
+        };
 
         service.quitarVueloDelPaquete = function(idReserva, idPaquete) {
             var deferred = $q.defer();
@@ -155,7 +173,7 @@ angular.module('viajesApp')
             });
 
             return deferred.promise;
-        }
+        };
 
         service.quitarHotelDelPaquete = function(idReserva, idPaquete) {
             var deferred = $q.defer();
@@ -169,7 +187,7 @@ angular.module('viajesApp')
             });
 
             return deferred.promise;
-        }
+        };
 
         service.quitarAutoDelPaquete = function(idReserva, idPaquete) {
             var deferred = $q.defer();
@@ -183,7 +201,7 @@ angular.module('viajesApp')
             });
 
             return deferred.promise;
-        }
+        };
 
         return service;
     }]);

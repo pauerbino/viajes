@@ -17,6 +17,52 @@ router.get('/', function(req, res, next) {
     });
 });
 
+router.get('/miPaquete/:id', function(req, res, next) {
+    console.log("Aca estoy recibiendo el ID");
+    console.log(req.params.id);
+    Paquete.findById(req.params.id).populate({
+        path: 'reservaVuelo',
+        populate: { path: 'vuelo',
+            populate:  [{ path: 'aerolinea'},{ path: 'ciudadOrigen'},{ path: 'ciudadDestino'}]
+        }
+      }).populate({
+        path: 'reservaHotel',
+        populate: { path: 'hotel',
+            populate: { path: 'ciudad'}
+        }
+      }).populate({
+        path: 'reservaAuto',
+        populate: [{ path: 'auto', populate: {path: 'agencia'} },{ path: 'lugarRetiro' }, { path: 'lugarDevolucion' }]
+      }).exec(function(err, paquete) {
+        if (err) return next(err);
+        res.json(paquete);
+    });
+});
+
+router.get('/:email', function(req, res, next) {
+    User.find({"email": req.params.email}).exec(function(err,u) {
+        console.log(u);
+        Paquete.find({"usuario" : u[0]._id, "pagado": true}).populate({
+            path: 'reservaVuelo',
+            populate: { path: 'vuelo',
+                populate:  [{ path: 'aerolinea'},{ path: 'ciudadOrigen'},{ path: 'ciudadDestino'}]
+            }
+        }).populate({
+            path: 'reservaHotel',
+            populate: { path: 'hotel',
+                populate: { path: 'ciudad'}
+            }
+        }).populate({
+            path: 'reservaAuto',
+            populate: [{ path: 'auto', populate: {path: 'agencia'} },{ path: 'lugarRetiro' }, { path: 'lugarDevolucion' }]
+        }).exec(function(err, paquetes) {
+            if (err) return next(err);
+            res.json(paquetes);
+        });
+    });
+});
+
+
 router.get('/habilitado/:email', function(req, res, next) {
     console.log("se buscara paquete actual o se creara uno en su defecto");
     User.find({"email": req.params.email}).exec(function(err,u) {
@@ -62,30 +108,24 @@ router.get('/habilitado/:email', function(req, res, next) {
     });
 });
 
-router.get('/:id', function(req, res, next) {
-    Paquete.findById(req.params.id).populate({
-        path: 'reservaVuelo',
-        populate: { path: 'vuelo',
-            populate:  [{ path: 'aerolinea'},{ path: 'ciudadOrigen'},{ path: 'ciudadDestino'}]
-        }
-      }).populate({
-        path: 'reservaHotel',
-        populate: { path: 'hotel',
-            populate: { path: 'ciudad'}
-        }
-      }).populate({
-        path: 'reservaAuto',
-        populate: [{ path: 'auto', populate: {path: 'agencia'} },{ path: 'lugarRetiro' }, { path: 'lugarDevolucion' }]
-      }).exec(function(err, paquete) {
-        if (err) return next(err);
-        res.json(paquete);
-    });
-});
-
 router.post('/ReservaHotel', function(req, res, next) {
+    var partesFechaIngreso = req.body.fechaIngreso.split('-');
+    var partesFechaSalida = req.body.fechaSalida.split('-');
+    var fechaComienzo = new Date(partesFechaIngreso[2],partesFechaIngreso[1]-1,partesFechaIngreso[0]); 
+    var fechaFin = new Date(partesFechaSalida[2],partesFechaSalida[1]-1,partesFechaSalida[0]);
+    var fechaComienzoParaContar = new Date(partesFechaIngreso[2],partesFechaIngreso[1]-1,partesFechaIngreso[0]); 
+    var cantDias = 0;
+    //Porque se cobra por noche. Si voy del 20 al 25, son 5 dias.
+    for (var d = fechaComienzoParaContar; d < fechaFin; d.setDate(d.getDate() + 1)) {
+        cantDias++;
+    }
+    var montoTotal = req.body.monto * cantDias; 
+
     var nuevaReserva = new ReservaHotel ({
         hotel: req.body.hotel,
-        monto: req.body.monto
+        monto: montoTotal,
+        fechaIngreso: fechaComienzo,
+        fechaSalida: fechaFin
     });
 
     nuevaReserva.save(function(err) {
@@ -94,7 +134,7 @@ router.post('/ReservaHotel', function(req, res, next) {
 
     Paquete.findById(req.body.idPaquete).exec(function(err, paquete) {
         if (err) return next(err);
-        paquete.montoTotal = paquete.montoTotal + req.body.monto;
+        paquete.montoTotal = paquete.montoTotal + montoTotal;
         paquete.reservaHotel.push(nuevaReserva);
         paquete.save(function(err) {
             if (err) throw err;

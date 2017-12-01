@@ -21,7 +21,7 @@ angular.module('viajesApp')
 
     $scope.isLoggedIn = function() {
         return UserService.isLoggedIn();
-    }
+    };
 
     $scope.buscar = function() {
         $scope.resultadoBusqueda = [];
@@ -29,8 +29,12 @@ angular.module('viajesApp')
         VueloService.reset();
         if (($scope.busqueda.origen) && ($scope.busqueda.destino) &&($scope.busqueda.fecha)){
             var fecha = $filter('date')($scope.busqueda.fecha, "dd-MM-yyyy");
-            if ($scope.busqueda.aerolinea == null) aerolineaId = 99;
-            else aerolineaId = $scope.busqueda.aerolinea._id;
+            if ($scope.busqueda.aerolinea === null) {
+                aerolineaId = 99;
+            } 
+            else {
+                aerolineaId = $scope.busqueda.aerolinea._id;
+            } 
             VueloService.getVuelos($scope.busqueda.origen._id, $scope.busqueda.destino._id, fecha, aerolineaId).then(function(response){
                 $scope.resultadoBusqueda = response;
             });

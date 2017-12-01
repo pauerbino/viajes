@@ -17,7 +17,7 @@ angular.module('viajesApp')
 
     $scope.isLoggedIn = function() {
         return UserService.isLoggedIn();
-    }
+    };
 
     $scope.buscar = function() {
         $scope.resultadoBusqueda = [];

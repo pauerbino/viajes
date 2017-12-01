@@ -12,15 +12,13 @@ angular.module('viajesApp')
         CiudadService.getCiudades().then(function(response){
             $scope.ciudades = response;
         });
-        PaqueteService.getPaquete($scope.idPaquete).then(function(response){
-        });
     }
 
     initialize();
 
     $scope.isLoggedIn = function() {
         return UserService.isLoggedIn();
-    }
+    };
 
     $scope.buscar = function() {
         $scope.resultadoBusqueda = [];

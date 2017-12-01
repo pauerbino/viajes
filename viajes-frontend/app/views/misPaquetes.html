@@ -1,0 +1,13 @@
+<h4 class="bold" style="margin-bottom: 30px;">Mis Reservas</h4>
+<div class="resultado-container">
+    <div class="row resultado-single" ng-repeat="paquete in misPaquetes">
+        <div class="col-xs-6">
+            <h4><span class="bold">Monto:</span> {{paquete.montoTotal}}</h4>
+            <h4><span class="bold">Fecha de pago:</span> {{paquete.fechaPago}}</h4>
+        </div>
+        <div class="col-xs-3 align-center">
+            <button class="btn btn-danger btn-form" ng-click="verPaquete(paquete._id)"> Ver mi reserva </button>
+        </div>
+        <hr/>
+    </div>
+</div>
