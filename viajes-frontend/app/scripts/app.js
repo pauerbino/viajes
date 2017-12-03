@@ -50,7 +50,7 @@ angular
         controller: 'BusquedaVueloSinUserCtrl',
         controllerAs: 'vm'
     })
-    .when('/miCarrito/:idPaquete', {
+    .when('/miCarrito', {
         templateUrl: 'views/miCarrito.html',
         controller: 'MiCarritoCtrl',
         controllerAs: 'vm'

@@ -1,95 +1,146 @@
-<h4 ng-show="paquete.reservaVuelo.length > 0 || paquete.reservaHotel.length > 0 || paquete.reservaAuto.length > 0">Mi Carrito:</h4>
-<div class="resultado-container">
-    <h4 class="bold" style="margin-bottom: 30px;" ng-show="paquete.reservaVuelo.length > 0"> Mis Reservas de Vuelos ({{paquete.reservaVuelo.length}})</h4>
-    <div class="row resultado-single" ng-repeat="reserva in paquete.reservaVuelo">
-        <div class="thumbnail col-xs-3">
-             <img class="img-rounded" ng-src="{{reserva.vuelo.aerolinea.url}}" alt="Image not found">
-        </div>
-        <div class="col-xs-6">
-            <h4><span class="bold">Salida:</span> {{reserva.vuelo.fechaSalida| date:'medium'}} - {{reserva.vuelo.ciudadOrigen.nombre}}</h4>
-            <h4><span class="bold">Llegada:</span> {{reserva.vuelo.fechaLlegada| date:'medium'}} - {{reserva.vuelo.ciudadDestino.nombre}}</h4>
-            <div>{{reserva.vuelo.aerolinea.name}}</div>
-            <p class="disponibilidad"> Quedan disponibles {{reserva.vuelo.cantPasajerosDisp}} de {{reserva.vuelo.cantPasajeros}} asientos</p>
+<div ng-show="!pagoExitoso">
+    <div ng-show="paquete.reservaVuelo.length > 0 || paquete.reservaHotel.length > 0 || paquete.reservaAuto.length > 0">
+        <h3  class="font" style="text-align: center" >Mi Carrito</h3>
+        <div class="resultado-container" ng-show="paquete.reservaVuelo.length > 0">
+            <h4 class="font" style="margin-bottom: 30px;"> Mis Vuelos Reservados ({{paquete.reservaVuelo.length}})</h4>
+            <div class="row resultado-single" ng-repeat="reserva in paquete.reservaVuelo">
+                <div class="thumbnail col-xs-3">
+                     <img class="img-rounded" ng-src="{{reserva.vuelo.aerolinea.url}}" alt="Image not found">
+                </div>
+                <div class="col-xs-6">
+                    <h4><span class="bold">Salida:</span> {{reserva.vuelo.fechaSalida| date:'medium'}} - {{reserva.vuelo.ciudadOrigen.nombre}}</h4>
+                    <h4><span class="bold">Llegada:</span> {{reserva.vuelo.fechaLlegada| date:'medium'}} - {{reserva.vuelo.ciudadDestino.nombre}}</h4>
+                    <div>{{reserva.vuelo.aerolinea.name}}</div>
+                    <p class="disponibilidad"> Quedan disponibles {{reserva.vuelo.cantPasajerosDisp}} de {{reserva.vuelo.cantPasajeros}} asientos</p>
 
-        </div>
-        <div class="col-xs-3 align-center">
-            <div class="precio-container">
-                <div class="precio-font">${{reserva.vuelo.precio}}</div>
+                </div>
+                <div class="col-xs-3 align-center">
+                    <div class="precio-container">
+                        <div class="precio-font">${{reserva.vuelo.precio}}</div>
+                    </div>
+                    <button class="btn btn-danger btn-form" ng-click="quitarVueloDelCarrito(reserva)"> Quitar del Carrito </button>
+                </div>
+                <hr/>
             </div>
-            <button class="btn btn-danger btn-form" ng-click="quitarVueloDelCarrito(reserva)"> Quitar del Carrito </button>
         </div>
-        <hr/>
-    </div>
-</div>
-<div class="resultado-container">
-    <h4 class="bold" style="margin-bottom: 30px;" ng-show="paquete.reservaHotel.length > 0"> Mis Reservas de Hoteles ({{paquete.reservaHotel.length}})</h4>
-    <div class="row resultado-single" ng-repeat="reserva in paquete.reservaHotel">
-        <div class="thumbnail col-xs-3">
-             <img class="img-rounded" ng-src="{{reserva.hotel.url}}" alt="Image not found">
-        </div>
-        <div class="col-xs-6">
-            <h4 class="bold">{{reserva.hotel.nombre}}</h4>
-            <div>{{reserva.hotel.direccion}}</div>
-            <div>{{reserva.hotel.estrellas}} Estrellas</div>
-            <p class="disponibilidad"> Quedan disponibles {{reserva.hotel.cantidadHabitacionesDisponibles}} de {{reserva.hotel.cantidadHabitaciones}} habitaciones</p>
+        <div class="resultado-container" ng-show="paquete.reservaHotel.length > 0">
+            <h4 class="font" style="margin-bottom: 30px;"> Mis Hoteles Reservados ({{paquete.reservaHotel.length}})</h4>
+            <div class="row resultado-single" ng-repeat="reserva in paquete.reservaHotel">
+                <div class="thumbnail col-xs-3">
+                     <img class="img-rounded" ng-src="{{reserva.hotel.url}}" alt="Image not found">
+                </div>
+                <div class="col-xs-6">
+                    <h4 class="bold">{{reserva.hotel.nombre}}</h4>
+                    <div>{{reserva.hotel.direccion}}</div>
+                    <div>{{reserva.hotel.estrellas}} Estrellas</div>
+                    <p class="disponibilidad"> Quedan disponibles {{reserva.hotel.cantidadHabitacionesDisponibles}} de {{reserva.hotel.cantidadHabitaciones}} habitaciones</p>
 
-        </div>
-        <div class="col-xs-3 align-center">
-            <div class="precio-container">
-                <div class="precio-font">${{reserva.monto}}</div>
+                </div>
+                <div class="col-xs-3 align-center">
+                    <div class="precio-container">
+                        <div class="precio-font">${{reserva.monto}}</div>
+                    </div>
+                    <button class="btn btn-danger btn-form" ng-click="quitarHotelDelCarrito(reserva)"> Quitar del Carrito </button>
+                </div>
+                <hr/>
             </div>
-            <button class="btn btn-danger btn-form" ng-click="quitarHotelDelCarrito(reserva)"> Quitar del Carrito </button>
         </div>
-        <hr/>
-    </div>
-</div>
-<div class="resultado-container">
-    <h4 class="bold" style="margin-bottom: 30px;" ng-show="paquete.reservaAuto.length > 0"> Mis Reservas de Vehiculos ({{paquete.reservaAuto.length}})</h4>
-    <div class="row resultado-single" ng-repeat="reserva in paquete.reservaAuto">
-        <div class="thumbnail col-xs-3">
-             <img class="img-rounded" ng-src="{{reserva.auto.url}}" alt="Image not found">
-        </div>
-        <div class="col-xs-6">
-            <h4 class="bold">{{reserva.auto.marca}} {{reserva.auto.modelo}}</h4>
-            <div>{{reserva.auto.agencia.nombre}}</div>
-            <div> Lugar Retiro: {{reserva.lugarRetiro.nombre}}, {{reserva.lugarRetiro.pais}}</div>
-            <div> Lugar Devolucion: {{reserva.lugarDevolucion.nombre}}, {{reserva.lugarDevolucion.pais}}</div>
-        </div>
-        <div class="col-xs-3 align-center">
-            <div class="precio-container">
-                <div class="precio-font">${{reserva.monto}}</div>
+        <div class="resultado-container" ng-show="paquete.reservaAuto.length > 0">
+            <h4 class="font" style="margin-bottom: 30px;"> Mis Vehiculos Reservados ({{paquete.reservaAuto.length}})</h4>
+            <div class="row resultado-single" ng-repeat="reserva in paquete.reservaAuto">
+                <div class="thumbnail col-xs-3">
+                     <img class="img-rounded" ng-src="{{reserva.auto.url}}" alt="Image not found">
+                </div>
+                <div class="col-xs-6">
+                    <h4 class="bold">{{reserva.auto.marca}} {{reserva.auto.modelo}}</h4>
+                    <div>{{reserva.auto.agencia.nombre}}</div>
+                    <div> Lugar Retiro: {{reserva.lugarRetiro.nombre}}, {{reserva.lugarRetiro.pais}}</div>
+                    <div> Lugar Devolucion: {{reserva.lugarDevolucion.nombre}}, {{reserva.lugarDevolucion.pais}}</div>
+                </div>
+                <div class="col-xs-3 align-center">
+                    <div class="precio-container">
+                        <div class="precio-font">${{reserva.monto}}</div>
+                    </div>
+                    <button class="btn btn-danger btn-form" ng-click="quitarAutoDelCarrito(reserva)"> Quitar del Carrito </button>
+                </div>
+                <hr/>
             </div>
-            <button class="btn btn-danger btn-form" ng-click="quitarAutoDelCarrito(reserva)"> Quitar del Carrito </button>
         </div>
-        <hr/>
+        <div class="resultado-container">
+            <div class="row">
+                <div class="col-xs-9">
+                    <h4 class="bold" style="margin-bottom: 30px;"> Total a Abonar: </h4>
+                </div>
+                <div class="col-xs-3 align-center">
+                    <div class="precio-container">
+                        <div class="precio-font">${{paquete.montoTotal}}</div>
+                        <div id="paypal-button"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<div class="resultado-container" ng-show="paquete.reservaVuelo.length > 0 || paquete.reservaHotel.length > 0 || paquete.reservaAuto.length > 0">
-    <div class="col-xs-6">
-        <h4 class="bold" style="margin-bottom: 30px;"> Total a Abonar: </h4>
-    </div>
-    <div class="col-xs-3 align-center">
-        <div class="precio-container">
-            <div class="precio-font">${{paquete.montoTotal}}</div>
+    <div ng-show="paquete.reservaVuelo.length == 0 && paquete.reservaHotel.length == 0 && paquete.reservaAuto.length == 0">
+        <div class="font">
+            <h4 class="align-center"> Tu carrito se encuentra vacio, comienza a llenarlo hoy!</h4>
+        </div>
+
+        <div>
+
+            <div style="width: 300px; margin:auto">
+                 <hr/>
+                <button style="margin-left:75px;" type="submit"  class="btn btn-info btn-form" ng-click="irAInicio()">Quiero Comenzar!</button>
+                 <hr/>
+            </div>
         </div>
     </div>
 </div>
-<hr/>
-<button class="btn btn-form" ng-click="pagar()" ng-show="paquete.reservaVuelo.length > 0 || paquete.reservaHotel.length > 0 || paquete.reservaAuto.length > 0"> Pagar </button>
+<div ng-show="pagoExitoso">
+    <div class="font">
+        <h4 class="align-center"> El pago fue realizado con exito, para conocer más ingresa a tus reservas</h4>
+    </div>
 
-<div class="font">
-    <h4 class="align-center" ng-show="paquete.reservaVuelo.length == 0 && paquete.reservaHotel.length == 0 && paquete.reservaAuto.length == 0"> Tu carrito se encuentra vacio, comienza a llenarlo hoy!!!</h4>
-</div>
+    <div>
 
-<div>
-    <div style="width: 300px; margin:auto" ng-show="paquete.reservaVuelo.length == 0 && paquete.reservaHotel.length == 0 && paquete.reservaAuto.length == 0">
-         <hr/>
-        <button style="margin-left:75px;" type="submit"  class="btn btn-info btn-form" ng-click="buscarVuelos()"> Buscar Vuelos</button>
-         <hr/>
-        <button style="margin-left:75px;" type="submit" class="btn btn-info btn-form" ng-click="buscarAutos()"> Buscar Vehiculos</button>
-        <hr/>
-        <button style="margin-left:75px;" type="submit" class="btn btn-info btn-form" ng-click="buscarHoteles()"> Buscar Hoteles</button>
-        <hr/>
+        <div style="width: 300px; margin:auto">
+             <hr/>
+            <button style="margin-left:75px;" type="submit"  class="btn btn-info btn-form" ng-click="irAMisReservas()">Mis Reservas</button>
+             <hr/>
+        </div>
     </div>
 </div>
+<script>
+    $( document ).ready(function() {
+         var pay = (window.data).toString();
 
+         paypal.Button.render({
+
+            env: 'sandbox',
+            client: {
+                sandbox:    'AaexcTf1YLaokQ0wVax2oAbvlsvt2AucEXajnNkS5zzBb1Lb-HNaPIOLVf_jmqgxIY9S64z7l32-yRBa',
+                production: 'xxxxxxxxx'
+            },
+
+            commit: true, // Show a 'Pay Now' button
+            payment: function(data, actions) {
+                return actions.payment.create({
+                    payment: {
+                        transactions: [
+                            {
+                                amount: { total: pay, currency: 'USD' }
+                            }
+                        ]
+                    }
+                });
+            },
+
+            onAuthorize: function(data, actions) {
+                return actions.payment.execute().then(function(payment) {
+                    angular.element(document.getElementById('js-navbar-collapse')).scope().pagarPaquete();
+                });
+            }
+
+        }, '#paypal-button');
+    });
+
+</script>

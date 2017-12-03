@@ -62,3 +62,13 @@ Este cambio hace que "cantidadTotal y cantidadDisponible" no tengan que ir mas..
     * La ciudad del hotel sea igual a :destino (tipo ciudad id)
     * Que cantidadHabitacionesDisponibles sea mayor a cero
     * que coincidan las estrellas
+
+
+
+- Validar no poder elegir fechas pasadas
+- Indicar que el carrito fue pagado con exito y sacar el boton de pagado
+- Poner bien el monto total a pagar del carrito
+- Poner el "ha sido agregado al carrito" en vuelos y autos
+- Corregir que la aerolinea no sea required
+- Te parece poner un "Ir a mi carrito" luego de buscar hoteles? tipo flechas
+- Ver lo de body y html 100%

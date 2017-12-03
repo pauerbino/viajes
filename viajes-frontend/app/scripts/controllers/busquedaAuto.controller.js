@@ -8,6 +8,7 @@ angular.module('viajesApp')
     $scope.ciudad = {};
     $scope.resultadoBusqueda = [];
     $scope.idPaquete = $routeParams.idPaquete;
+
     function initialize() {
         CiudadService.getCiudades().then(function(response){
             $scope.ciudades = response;

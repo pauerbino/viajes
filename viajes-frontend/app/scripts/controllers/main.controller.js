@@ -12,4 +12,7 @@ angular.module('viajesApp')
     $rootScope.$on('updateNavigation', initialize);
     initialize();
 
+    $scope.pagarPaquete = function() {
+        $rootScope.$emit('pagarPaquete');
+    };
   }]);

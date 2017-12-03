@@ -31,16 +31,10 @@ angular.module('viajesApp')
                 $scope.paquete = resp;
                 HotelService.reset();
                 var estrellas =  ($scope.busqueda.estrellas)? $scope.busqueda.estrellas:99;
-                console.log(estrellas);
                 HotelService.getHoteles($scope.busqueda.destino._id,estrellas).then(function(response){
-
-                    // for (var i = 0; i < response.length; i++) {
-                    //     response[i].enCarrito = true;
-                    //     // response[i].enCarrito = $scope.paquete.reservaHotel.filter(function(obj) {
-                    //     //     return obj.hotel === response[i]._id;
-                    //     // })[0];
-                    // }
-                    console.log(response);
+                    for (var i = 0; i < response.length; i++) {
+                        response[i].enCarrito = false;
+                    }
                     $scope.resultadoBusqueda = response;
                 });
             });
@@ -52,20 +46,8 @@ angular.module('viajesApp')
         var fechaSalida = $filter('date')($scope.busqueda.fechaSalida, "dd-MM-yyyy");
         PaqueteService.nuevaReservaHotel($scope.idPaquete, hotel._id, hotel.monto, fechaIngreso, fechaSalida).then(function(){
             PaqueteService.reset();
-            // PaqueteService.getPaquete($scope.idPaquete).then(function(resp){
-            //     console.log(resp);
-            // });
+            hotel.enCarrito = true;
         });
-        // response[i].enCarrito = $scope.paquete.reservaHotel.filter(function(obj) {
-        //                     return obj.hotel === response[i]._id;
-        //                 })[0];
-        // response[i].enCarrito =
-        // PaqueteService.nuevaReservaHotel($scope.idPaquete, hotel._id, hotel.monto).then(function(response){
-        //     // hotel.enCarrito = true;
-        //     PaqueteService.reset();
-        //     PaqueteService.getPaquete($scope.idPaquete).then(function(resp){
-        //     });
-        // });
     };
 
     $scope.irBusquedaAuto = function() {

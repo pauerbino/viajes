@@ -1,14 +1,15 @@
 'use strict';
 angular.module('viajesApp')
-  .controller('MiCarritoCtrl', [ '$filter', '$location', '$routeParams', '$scope', 'HotelService', 'CiudadService', 'PaqueteService', 'UserService', function ( $filter, $location,  $routeParams, $scope, HotelService, CiudadService, PaqueteService, UserService) {
+  .controller('MiCarritoCtrl', [ '$filter', '$location', '$rootScope', '$scope', 'HotelService', 'CiudadService', 'PaqueteService', 'UserService', function ( $filter, $location, $rootScope, $scope, HotelService, CiudadService, PaqueteService, UserService) {
 
     $scope.hoteles = [];
     $scope.busqueda = {};
     $scope.ciudades = [];
     $scope.ciudad = {};
     $scope.resultadoBusqueda = [];
-    $scope.idPaquete = null; 
+    $scope.idPaquete = null;
     $scope.paquete = null;
+    $scope.pagoExitoso = false;
 
     $scope.currentUser = {
         email : "",
@@ -18,36 +19,18 @@ angular.module('viajesApp')
     function initialize() {
         if (UserService.isLoggedIn()) {
             $scope.currentUser = UserService.currentUser();
-            if($routeParams.idPaquete){
-                $scope.idPaquete = $routeParams.idPaquete;
-                PaqueteService.getPaquete($scope.idPaquete).then(function(response){
-                    $scope.paquete = response;
-                    console.log(response);
-                });
-            }
-            else {
-                PaqueteService.getPaqueteActual($scope.currentUser.email).then(function(response){
-                    console.log(response);
-                    $scope.paquete = response;
-                    $scope.idPaquete = $scope.paquete._id;
-                    console.log($scope.paquete);
-                });
-            }
+            PaqueteService.getPaqueteActual($scope.currentUser.email).then(function(response){
+                $scope.paquete = response;
+                $scope.idPaquete = $scope.paquete._id;
+                window.data = $scope.paquete.montoTotal;
+            });
         }
         else {
-            //ACCESO PROHIBIDO
-            console.log("aCCESO PROHUBIDO");
-            $location.path('/busquedaAuto');
+            $location.path('/home');
         }
     }
 
     initialize();
-
-    $scope.pagar = function() {
-        PaqueteService.pagarPaquete($scope.idPaquete).then(function(){
-            initialize();
-        });
-    };
 
     $scope.buscarAutos = function() {
         if (UserService.isLoggedIn()) {
@@ -99,5 +82,23 @@ angular.module('viajesApp')
             initialize();
         });
     };
+
+    $scope.irAInicio =function(){
+        $location.path('/home');
+    };
+
+    $scope.irAMisReservas =function(){
+        $location.path('/misReservas');
+    };
+
+    $rootScope.$on('pagarPaquete', pagar);
+
+    function pagar() {
+        PaqueteService.pagarPaquete($scope.idPaquete).then(function(){
+            $scope.pagoExitoso = true;
+            // initialize();
+        });
+    };
+
 
   }]);

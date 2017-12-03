@@ -4,6 +4,7 @@ angular.module('viajesApp')
 
     function initialize() {
         UserService.logout();
+        $location.path('/home');
     }
 
     initialize();
