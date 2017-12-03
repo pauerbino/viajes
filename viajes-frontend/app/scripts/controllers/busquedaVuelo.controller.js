@@ -38,6 +38,9 @@ angular.module('viajesApp')
                 aerolineaId = $scope.busqueda.aerolinea._id;
             } 
             VueloService.getVuelos($scope.busqueda.origen._id, $scope.busqueda.destino._id, fecha, aerolineaId).then(function(response){
+                for (var i = 0; i < response.length; i++) {
+                    response[i].enCarrito = false;
+                }
                 console.log(response);
                 $scope.resultadoBusqueda = response;
             });
@@ -47,6 +50,7 @@ angular.module('viajesApp')
     $scope.agregarAlCarrito = function(vuelo) {
         PaqueteService.nuevaReservaVuelo($scope.idPaquete, vuelo._id, vuelo.precio).then(function(){
             PaqueteService.reset();
+            vuelo.enCarrito = true;
             // PaqueteService.getPaquete($scope.idPaquete).then(function(resp){
             //     console.log(resp);
             // });

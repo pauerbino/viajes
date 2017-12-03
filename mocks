@@ -66,9 +66,15 @@ Este cambio hace que "cantidadTotal y cantidadDisponible" no tengan que ir mas..
 
 
 - Validar no poder elegir fechas pasadas
+
+bower install eonasdan-bootstrap-datetimepicker#latest --save
 - Indicar que el carrito fue pagado con exito y sacar el boton de pagado
 - Poner bien el monto total a pagar del carrito
-- Poner el "ha sido agregado al carrito" en vuelos y autos
-- Corregir que la aerolinea no sea required
+- Poner el "ha sido agregado al carrito" en vuelos y autos ----- LISTO
+- Corregir que la aerolinea no sea required ----- LISTO
 - Te parece poner un "Ir a mi carrito" luego de buscar hoteles? tipo flechas
 - Ver lo de body y html 100%
+
+
+
+

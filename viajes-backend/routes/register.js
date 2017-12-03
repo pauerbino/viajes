@@ -25,22 +25,30 @@ router.post('/', function(req, res, next) {
   //   });
   //   return;
   // }
-  var user = new User({
-    name : req.body.name,
-    email : req.body.email
-  });
 
-  user.setPassword(req.body.password);
-  console.log("creo usuario");
+  User.find({"email" : req.body.email}).exec(function(err,u) {
+    if (u.length > 0) {
+      res.json({"error" : "El email ya existe. Por favor, intentar nuevamente."});
+    }
+    else {
+      var user = new User({
+        name : req.body.name,
+        email : req.body.email
+      });
 
-  user.save(function(err) {
-    if (err) throw err;
-    console.log("creando token");
-    var token;
-    token = user.generateJwt();
-    res.json({
-      "token" : token
-    });
+      user.setPassword(req.body.password);
+      console.log("creo usuario");
+
+      user.save(function(err) {
+        if (err) throw err;
+        console.log("creando token");
+        var token;
+        token = user.generateJwt();
+        res.json({
+          "token" : token
+        });
+      });
+    }
   });
 
 });

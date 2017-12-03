@@ -43,8 +43,8 @@
                 </div>
                 <div class="col-xs-6">
                     <div class="form-group" ng-class="{'has-error':busquedaVueloForm.aerolinea.$invalid && busquedaVueloForm.$submitted}">
-                        <label for="aerolinea" class="control-label">Aerolinea *</label>
-                        <ui-select allow-clear name="aerolinea" ng-model="busqueda.aerolinea" theme="bootstrap" required>
+                        <label for="aerolinea" class="control-label">Aerolinea</label>
+                        <ui-select allow-clear name="aerolinea" ng-model="busqueda.aerolinea" theme="bootstrap">
                             <ui-select-match placeholder="Selecciona una aerolinea">{{$select.selected.name}} </ui-select-match>
                             <ui-select-choices repeat="item in aerolineas | filter: $select.search">
                                 {{item.name}}

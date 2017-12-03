@@ -80,8 +80,8 @@
                 <div class="precio-font">${{auto.monto}}</div>
                 <div> por día</div>
             </div>
-            <button class="btn btn-info btn-form" ng-click="agregarAlCarrito(auto)" ng-show="isLoggedIn()"> Agregar al Carrito </button>
-            <button class="btn btn-danger btn-form" ng-click="quitarDelCarrito()" ng-show="false"> Quitar del Carrito </button>
+            <button class="btn btn-info btn-form" ng-click="agregarAlCarrito(auto)" ng-show="!auto.enCarrito"> Agregar al Carrito </button>
+            <p class="font" ng-show="auto.enCarrito">Ha sido reservado!</p>
         </div>
         <hr/>
     </div>

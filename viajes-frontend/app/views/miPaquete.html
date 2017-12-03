@@ -1,15 +1,14 @@
-<h4 class="bold" style="margin-bottom: 30px;">Mi Reserva</h4>
+<h3  class="font" style="text-align: center" >Mi Reserva</h3>
 <div class="resultado-container">
-    <h4 class="bold" style="margin-bottom: 30px;" ng-show="paquete.reservaVuelo.length > 0"> Vuelos({{paquete.reservaVuelo.length}})</h4>
+    <h4 class="font" style="margin-bottom: 30px;" ng-show="paquete.reservaVuelo.length > 0"> Vuelos({{paquete.reservaVuelo.length}})</h4>
     <div class="row resultado-single" ng-repeat="reserva in paquete.reservaVuelo">
         <div class="thumbnail col-xs-3">
              <img class="img-rounded" ng-src="{{reserva.vuelo.aerolinea.url}}" alt="Image not found">
         </div>
         <div class="col-xs-6">
-            <h4><span class="bold">Salida:</span> {{reserva.vuelo.fechaSalida| date:'medium'}} - {{reserva.vuelo.ciudadOrigen.nombre}}</h4>
-            <h4><span class="bold">Llegada:</span> {{reserva.vuelo.fechaLlegada| date:'medium'}} - {{reserva.vuelo.ciudadDestino.nombre}}</h4>
-            <div>{{reserva.vuelo.aerolinea.name}}</div>
-            <p class="disponibilidad"> Quedan disponibles {{reserva.vuelo.cantPasajerosDisp}} de {{reserva.vuelo.cantPasajeros}} asientos</p>
+            <h4 class="bold">{{reserva.vuelo.aerolinea.name}}</h4>
+            <h5><span class="bold">Salida:</span> {{reserva.vuelo.fechaSalida| date:'medium'}} - {{reserva.vuelo.ciudadOrigen.nombre}}</h5>
+            <h5><span class="bold">Llegada:</span> {{reserva.vuelo.fechaLlegada| date:'medium'}} - {{reserva.vuelo.ciudadDestino.nombre}}</h5>
 
         </div>
         <div class="col-xs-3 align-center">
@@ -21,39 +20,40 @@
     </div>
 </div>
 <div class="resultado-container">
-    <h4 class="bold" style="margin-bottom: 30px;" ng-show="paquete.reservaHotel.length > 0"> Hoteles ({{paquete.reservaHotel.length}})</h4>
+    <h4 class="font" style="margin-bottom: 30px;" ng-show="paquete.reservaHotel.length > 0"> Hoteles ({{paquete.reservaHotel.length}})</h4>
     <div class="row resultado-single" ng-repeat="reserva in paquete.reservaHotel">
         <div class="thumbnail col-xs-3">
              <img class="img-rounded" ng-src="{{reserva.hotel.url}}" alt="Image not found">
         </div>
         <div class="col-xs-6">
             <h4 class="bold">{{reserva.hotel.nombre}}</h4>
-            <div>{{reserva.hotel.direccion}}</div>
-            <div>{{reserva.hotel.estrellas}} Estrellas</div>
-            <p class="disponibilidad"> Quedan disponibles {{reserva.hotel.cantidadHabitacionesDisponibles}} de {{reserva.hotel.cantidadHabitaciones}} habitaciones</p>
+            <h5><span class="bold">Direccion: </span>{{reserva.hotel.direccion}}</h5>
+            <h5><span class="bold">Estrellas: </span>{{reserva.hotel.estrellas}}</h5>
+            <h5><span class="bold">Fecha de ingreso: </span>{{reserva.fechaIngreso| date:'medium'}}</h5>
+            <h5><span class="bold">Fecha de salida: </span>{{reserva.fechaSalida| date:'medium'}}</h5>
 
         </div>
         <div class="col-xs-3 align-center">
             <div class="precio-container">
-                <div>Por sólo</div>
-                <div class="precio-font">${{reserva.hotel.monto}}</div>
-                <div> por día</div>
+                <div class="precio-font">${{reserva.monto}}</div>
             </div>
         </div>
         <hr/>
     </div>
 </div>
 <div class="resultado-container">
-    <h4 class="bold" style="margin-bottom: 30px;" ng-show="paquete.reservaAuto.length > 0"> Vehiculos ({{paquete.reservaAuto.length}})</h4>
+    <h4 class="font" style="margin-bottom: 30px;" ng-show="paquete.reservaAuto.length > 0"> Vehiculos ({{paquete.reservaAuto.length}})</h4>
     <div class="row resultado-single" ng-repeat="reserva in paquete.reservaAuto">
         <div class="thumbnail col-xs-3">
              <img class="img-rounded" ng-src="{{reserva.auto.url}}" alt="Image not found">
         </div>
         <div class="col-xs-6">
             <h4 class="bold">{{reserva.auto.marca}} {{reserva.auto.modelo}}</h4>
-            <div>{{reserva.auto.agencia.nombre}}</div>
-            <div> Lugar Retiro: {{reserva.lugarRetiro.nombre}}, {{reserva.lugarRetiro.pais}}</div>
-            <div> Lugar Devolucion: {{reserva.lugarDevolucion.nombre}}, {{reserva.lugarDevolucion.pais}}</div>
+            <h5><span class="bold">Agencia: </span>{{reserva.auto.agencia.nombre}}</h5>
+            <h5><span class="bold">Fecha de retiro: </span>{{reserva.fechaRetiro| date:'medium'}}</h5>
+            <h5><span class="bold">Lugar de retiro: </span>{{reserva.lugarRetiro.nombre}}, {{reserva.lugarRetiro.pais}}</h5>
+            <h5><span class="bold">Fecha de devolucion: </span>{{reserva.fechaDevolucion| date:'medium'}}</h5>
+            <h5><span class="bold">Lugar de devolucion: </span>{{reserva.lugarDevolucion.nombre}}, {{reserva.lugarDevolucion.pais}}</h5>
         </div>
         <div class="col-xs-3 align-center">
             <div class="precio-container">
