@@ -65,15 +65,19 @@ Este cambio hace que "cantidadTotal y cantidadDisponible" no tengan que ir mas..
 
 
 
-- Validar no poder elegir fechas pasadas
+
 
 bower install eonasdan-bootstrap-datetimepicker#latest --save
-- Indicar que el carrito fue pagado con exito y sacar el boton de pagado
-- Poner bien el monto total a pagar del carrito
+- Indicar que el carrito fue pagado con exito y sacar el boton de pagado ----- LISTO
+- Poner bien el monto total a pagar del carrito ----- LISTO
 - Poner el "ha sido agregado al carrito" en vuelos y autos ----- LISTO
 - Corregir que la aerolinea no sea required ----- LISTO
-- Te parece poner un "Ir a mi carrito" luego de buscar hoteles? tipo flechas
+- Te parece poner un "Ir a mi carrito" luego de buscar hoteles? tipo flechas ---- QUE LA BUSQUEDA SEA CIRCULAR.
 - Ver lo de body y html 100%
+- nomre de "Mi paquete" que sea editable ---- JOAQUIN.
+- fecha de ingreso y salida, y tambien de reitro yd evolucion que NO muestre horarios.
+- castear el precio para que en vez de 13500 quede 13.500
+- Validar no poder elegir fechas pasadas
 
 
 
