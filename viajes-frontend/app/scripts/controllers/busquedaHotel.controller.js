@@ -9,6 +9,9 @@ angular.module('viajesApp')
     $scope.resultadoBusqueda = [];
     $scope.idPaquete = $routeParams.idPaquete;
     $scope.paquete = null;
+    $scope.currentDate = new Date();
+    $scope.opcionEstrellas = [ { id:99, name: ''}, { id:1, name: '1'},{ id:2, name: '2'},{ id:3, name: '3'},{ id:4, name: '4'},{ id:5, name: '5'}]
+    $scope.busqueda.estrellas =  $scope.opcionEstrellas[0];
 
     function initialize() {
         CiudadService.getCiudades().then(function(response){
@@ -30,7 +33,7 @@ angular.module('viajesApp')
             PaqueteService.getPaquete($scope.idPaquete).then(function(resp){
                 $scope.paquete = resp;
                 HotelService.reset();
-                var estrellas =  ($scope.busqueda.estrellas)? $scope.busqueda.estrellas:99;
+                var estrellas =  ($scope.busqueda.estrellas)? $scope.busqueda.estrellas.id:99;
                 HotelService.getHoteles($scope.busqueda.destino._id,estrellas).then(function(response){
                     for (var i = 0; i < response.length; i++) {
                         response[i].enCarrito = false;
@@ -52,6 +55,10 @@ angular.module('viajesApp')
 
     $scope.irBusquedaAuto = function() {
         $location.path('/busquedaAuto/'+$scope.idPaquete);
+    };
+
+    $scope.irBusquedaVuelo = function() {
+        $location.path('/busquedaVuelo/'+$scope.idPaquete);
     };
 
   }]);

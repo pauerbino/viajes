@@ -6,6 +6,9 @@ angular.module('viajesApp')
     $scope.ciudades = [];
     $scope.ciudad = {};
     $scope.resultadoBusqueda = [];
+    $scope.currentDate = new Date();
+    $scope.opcionEstrellas = [ { id:99, name: ''}, { id:1, name: '1'},{ id:2, name: '2'},{ id:3, name: '3'},{ id:4, name: '4'},{ id:5, name: '5'}]
+    $scope.busqueda.estrellas =  $scope.opcionEstrellas[0];
 
     function initialize() {
         CiudadService.getCiudades().then(function(response){
@@ -25,16 +28,8 @@ angular.module('viajesApp')
 
         if (($scope.busqueda.destino)&&($scope.busqueda.fechaIngreso)&&($scope.busqueda.fechaSalida)){
             HotelService.reset();
-            var estrellas =  ($scope.busqueda.estrellas)? $scope.busqueda.estrellas:99;
-            console.log(estrellas);
+            var estrellas =  ($scope.busqueda.estrellas)? $scope.busqueda.estrellas.id:99;
             HotelService.getHoteles($scope.busqueda.destino._id,estrellas).then(function(response){
-
-                // for (var i = 0; i < response.length; i++) {
-                //     response[i].enCarrito = $scope.paquete.reservaHotel.filter(function(obj) {
-                //         return obj.hotel === response[i]._id;
-                //     })[0];
-                // }
-                // console.log(response);
                 $scope.resultadoBusqueda = response;
             });
         }
@@ -42,6 +37,10 @@ angular.module('viajesApp')
 
     $scope.irBusquedaAuto = function() {
         $location.path('/busquedaAuto');
+    };
+
+    $scope.irBusquedaVuelo = function() {
+        $location.path('/busquedaVuelo');
     };
 
   }]);

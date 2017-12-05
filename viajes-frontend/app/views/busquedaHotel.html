@@ -2,6 +2,9 @@
     <div class="button-header" ng-click="irBusquedaAuto()">
         <span class="glyphicon glyphicon-chevron-left"></span><p>Buscar Vehículos</p>
     </div>
+    <div class="button-header" ng-click="irBusquedaVuelo()">
+        <p>Buscar Vuelos</p><span class="glyphicon glyphicon-chevron-right"></span>
+    </div>
 </div>
 <div class="panel panel-info">
     <div class="panel-heading">
@@ -25,7 +28,8 @@
                 <div class="col-xs-6">
                     <div class="form-group" ng-class="{'has-error':busquedaHotelForm.estrellas.$invalid && busquedaHotelForm.$submitted}">
                         <label for="estrellas"> Estrellas</label>
-                        <input type="number" class="form-control" name="estrellas" ng-model="busqueda.estrellas">
+                        <select class="form-control" name="estrellas" ng-model="busqueda.estrellas" ng-options="option.name for option in opcionEstrellas">
+                        </select>
                     </div>
                 </div>
             </div>
@@ -33,15 +37,15 @@
                 <div class="col-xs-6">
                     <div class="form-group" ng-class="{'has-error':busquedaHotelForm.fechaIngreso.$invalid && busquedaHotelForm.$submitted}">
                         <label for="fechaIngreso"> Fecha Ingreso *</label>
-                        <input type="date" class="form-control" name="fechaIngreso" ng-model="busqueda.fechaIngreso" required>
-                        <p ng-show="busquedaHotelForm.fechaIngreso.$invalid && busquedaHotelForm.$submitted" class="help-block">Debe indicar la fecha de ingreso al hotel.</p>
+                        <input type="date" class="form-control" name="fechaIngreso" min="{{currentDate | date: 'yyyy-MM-dd'}}" ng-model="busqueda.fechaIngreso" required>
+                        <p ng-show="busquedaHotelForm.fechaIngreso.$invalid && busquedaHotelForm.$submitted" class="help-block">Debe indicar la fecha de ingreso al hotel, la cual debe ser superior al día de hoy.</p>
                     </div>
                 </div>
                 <div class="col-xs-6">
                     <div class="form-group" ng-class="{'has-error':busquedaHotelForm.fechaSalida.$invalid && busquedaHotelForm.$submitted}">
                         <label for="fechaSalida"> Fecha Salida *</label>
-                        <input type="date" class="form-control" name="fechaSalida" ng-model="busqueda.fechaSalida" required>
-                        <p ng-show="busquedaHotelForm.fechaSalida.$invalid && busquedaHotelForm.$submitted" class="help-block">Debe indicar la fecha de salida del hotel.</p>
+                        <input type="date" class="form-control" name="fechaSalida" min="{{currentDate | date: 'yyyy-MM-dd'}}" ng-model="busqueda.fechaSalida" required>
+                        <p ng-show="busquedaHotelForm.fechaSalida.$invalid && busquedaHotelForm.$submitted" class="help-block">Debe indicar la fecha de salida del hotel, la cual debe ser superior al día de hoy.</p>
                     </div>
                 </div>
             </div>
@@ -71,7 +75,7 @@
         <div class="col-xs-3 align-center">
             <div class="precio-container">
                 <div>Por sólo</div>
-                <div class="precio-font">${{hotel.monto}}</div>
+                <div class="precio-font">${{hotel.monto | currency:'$':2}}</div>
                 <div> por noche</div>
             </div>
             <button class="btn btn-info btn-form" ng-click="agregarAlCarrito(hotel)" ng-show="!hotel.enCarrito"> Agregar al Carrito </button>

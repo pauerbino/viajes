@@ -7,6 +7,7 @@ angular.module('viajesApp')
     $scope.aerolineas = [];
     $scope.ciudad = {};
     $scope.resultadoBusqueda = [];
+    $scope.currentDate = new Date();
 
     function initialize() {
         CiudadService.getCiudades().then(function(response){
@@ -31,10 +32,10 @@ angular.module('viajesApp')
             var fecha = $filter('date')($scope.busqueda.fecha, "dd-MM-yyyy");
             if ($scope.busqueda.aerolinea === null) {
                 aerolineaId = 99;
-            } 
+            }
             else {
                 aerolineaId = $scope.busqueda.aerolinea._id;
-            } 
+            }
             VueloService.getVuelos($scope.busqueda.origen._id, $scope.busqueda.destino._id, fecha, aerolineaId).then(function(response){
                 $scope.resultadoBusqueda = response;
             });
@@ -43,6 +44,10 @@ angular.module('viajesApp')
 
     $scope.irBusquedaAuto = function() {
         $location.path('/busquedaAuto');
+    };
+
+    $scope.irBusquedaHotel = function() {
+        $location.path('/busquedaHotel');
     };
 
   }]);
