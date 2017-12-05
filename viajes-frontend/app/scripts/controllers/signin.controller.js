@@ -8,12 +8,22 @@ angular.module('viajesApp')
       password : ""
     };
 
+    $scope.error;
+
+    function initialize() {
+      $scope.error = "";
+    }
+
     $scope.register = function() {
         if ($scope.signinForm.$valid) {
-            UserService.register($scope.credentials).then(function(){
-              $location.path('/lists');
-            }).catch(function(res){
-                console.log(res);
+            UserService.register($scope.credentials).then(function(response){
+              if (response.error) {
+                $scope.error = response.error;
+                $location.path('/signin');
+              }
+              else{
+                $location.path('/miCarrito');
+              }
             });
         }
     };

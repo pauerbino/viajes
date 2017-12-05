@@ -48,8 +48,11 @@ angular.module('viajesApp')
                 url: Configuration.getConfiguration().baseURL + '/register',
                 data: user
             }).then(function (response) {
-                saveToken(response.data.token);
-                $rootScope.$broadcast('updateNavigation');
+                if (response.data.token) {
+                    console.log("Se setea token");
+                    saveToken(response.data.token);
+                    $rootScope.$broadcast('updateNavigation');
+                }
                 deferred.resolve(response.data);
             }).catch(function (response) {
                 deferred.reject(response);

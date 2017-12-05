@@ -47,8 +47,8 @@
                 </div>
                 <div class="col-xs-6">
                     <div class="form-group" ng-class="{'has-error':busquedaVueloForm.aerolinea.$invalid && busquedaVueloForm.$submitted}">
-                        <label for="aerolinea" class="control-label">Aerolinea *</label>
-                        <ui-select allow-clear name="aerolinea" ng-model="busqueda.aerolinea" theme="bootstrap" required>
+                        <label for="aerolinea" class="control-label">Aerolinea</label>
+                        <ui-select allow-clear name="aerolinea" ng-model="busqueda.aerolinea" theme="bootstrap">
                             <ui-select-match placeholder="Selecciona una aerolinea">{{$select.selected.name}} </ui-select-match>
                             <ui-select-choices repeat="item in aerolineas | filter: $select.search">
                                 {{item.name}}
@@ -87,8 +87,8 @@
                 <div> por día</div>
             </div>
 
-            <button class="btn btn-info btn-form" ng-click="agregarAlCarrito(vuelo)" ng-show="isLoggedIn()"> Agregar al Carrito </button>
-            <button class="btn btn-danger btn-form" ng-click="quitarDelCarrito()" ng-show="false"> Quitar del Carrito </button>
+            <button class="btn btn-info btn-form" ng-click="agregarAlCarrito(vuelo)" ng-show="!vuelo.enCarrito"> Agregar al Carrito </button>
+            <p class="font" ng-show="vuelo.enCarrito">Ha sido reservado!</p>
 <!--
             <button class="btn btn-info btn-form" ng-click="agregarAlCarrito(vuelo)" ng-show="false"> Agregar al Carrito </button>
             <button class="btn btn-danger btn-form" ng-click="quitarDelCarrito()" ng-show="true"> Quitar del Carrito </button> -->
