@@ -75,7 +75,7 @@
         <div class="col-xs-3 align-center">
             <div class="precio-container">
                 <div>Por sólo</div>
-                <div class="precio-font">${{hotel.monto}}</div>
+                <div class="precio-font">${{hotel.monto | currency:'$':2}}</div>
                 <div> por noche</div>
             </div>
             <button class="btn btn-info btn-form" ng-click="agregarAlCarrito(hotel)" ng-show="!hotel.enCarrito"> Agregar al Carrito </button>

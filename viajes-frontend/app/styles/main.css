@@ -7,7 +7,8 @@
 
 body {
   padding: 0;
-  background-image: url("../images/digital-marketing.jpg");
+  background-image: url("../images/digital-marketing2.jpg");
+  background-size: cover;
 }
 
 html, body, .container {
