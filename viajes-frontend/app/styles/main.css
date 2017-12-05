@@ -10,8 +10,9 @@ body {
   background-image: url("../images/digital-marketing.jpg");
 }
 
-html, body {
-    // height: 100%;
+html, body, .container {
+    height: 100%;
+    min-height: fit-content;
 }
 
 /* Custom page header */

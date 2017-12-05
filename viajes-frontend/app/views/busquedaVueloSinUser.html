@@ -1,4 +1,7 @@
-<div class="one-button-headers-container font">
+<div class="two-button-headers-container font">
+    <div class="button-header" ng-click="irBusquedaHotel()">
+        <span class="glyphicon glyphicon-chevron-left"></span><p>Buscar Hoteles</p>
+    </div>
     <div class="button-header" ng-click="irBusquedaAuto()">
         <p>Buscar Vehículos</p><span class="glyphicon glyphicon-chevron-right"></span>
     </div>
@@ -37,8 +40,8 @@
                 <div class="col-xs-6">
                    <div class="form-group" ng-class="{'has-error':busquedaVueloForm.fecha.$invalid && busquedaVueloForm.$submitted}">
                         <label for="fecha"> Fecha de Vuelo *</label>
-                        <input type="date" class="form-control" name="fecha" ng-model="busqueda.fecha" required>
-                        <p ng-show="busquedaVueloForm.fecha.$invalid && busquedaVueloForm.$submitted" class="help-block">Debe indicar la fecha de vuelo.</p>
+                        <input type="date" class="form-control" name="fecha" min="{{currentDate | date: 'yyyy-MM-dd'}}" ng-model="busqueda.fecha" required>
+                        <p ng-show="busquedaVueloForm.fecha.$invalid && busquedaVueloForm.$submitted" class="help-block">Debe indicar la fecha de vuelo, la cual debe ser superior al día de hoy.</p>
                     </div>
                 </div>
                 <div class="col-xs-6">

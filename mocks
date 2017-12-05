@@ -64,11 +64,13 @@ Este cambio hace que "cantidadTotal y cantidadDisponible" no tengan que ir mas..
     * que coincidan las estrellas
 
 
-
-- Validar no poder elegir fechas pasadas
-- Indicar que el carrito fue pagado con exito y sacar el boton de pagado
-- Poner bien el monto total a pagar del carrito
-- Poner el "ha sido agregado al carrito" en vuelos y autos
-- Corregir que la aerolinea no sea required
-- Te parece poner un "Ir a mi carrito" luego de buscar hoteles? tipo flechas
-- Ver lo de body y html 100%
+- LISTO --> Te parece poner un "Ir a mi carrito" luego de buscar hoteles? tipo flechas ---- QUE LA BUSQUEDA SEA CIRCULAR.
+- LISTO --> Ver lo de body y html 100%
+- nomre de "Mi paquete" que sea editable ---- JOAQUIN.
+- fecha de ingreso y salida, y tambien de reitro yd evolucion que NO muestre horarios.
+- castear el precio para que en vez de 13500 quede 13.500
+- LISTO --> Validar no poder elegir fechas pasadas
+- Ver fonts
+- Cambiar hotel por alojamiento
+- LISTO -->Dropdown a estrellas
+- Validar fecha end y fecha start

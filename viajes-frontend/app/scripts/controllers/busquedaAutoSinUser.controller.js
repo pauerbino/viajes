@@ -6,6 +6,7 @@ angular.module('viajesApp')
     $scope.ciudades = [];
     $scope.ciudad = {};
     $scope.resultadoBusqueda = [];
+    $scope.currentDate = new Date();
 
     function initialize() {
         CiudadService.getCiudades().then(function(response){
