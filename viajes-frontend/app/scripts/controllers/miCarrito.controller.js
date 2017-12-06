@@ -10,6 +10,8 @@ angular.module('viajesApp')
     $scope.idPaquete = null;
     $scope.paquete = null;
     $scope.pagoExitoso = false;
+    $scope.nombrePaquete = "Mi paquete";
+    $scope.editNombrePaquete = false;
 
     $scope.currentUser = {
         email : "",
@@ -22,7 +24,8 @@ angular.module('viajesApp')
             PaqueteService.getPaqueteActual($scope.currentUser.email).then(function(response){
                 $scope.paquete = response;
                 $scope.idPaquete = $scope.paquete._id;
-                window.data = $scope.paquete.montoTotal;
+                window.localStorage['montoPaquete'] = $scope.paquete.montoTotal;
+                //window.data = $scope.paquete.montoTotal;
             });
         }
         else {
@@ -31,6 +34,17 @@ angular.module('viajesApp')
     }
 
     initialize();
+
+    $scope.modificarNombrePaquete = function(nombre) {
+        $scope.nombrePaquete = nombre;
+        $scope.editNombrePaquete = false;
+        $location.path('/miCarrito');
+    };
+
+    $scope.editarNombrePaquete = function() {
+        $scope.editNombrePaquete = true;
+        $location.path('/miCarrito');
+    };
 
     $scope.buscarAutos = function() {
         if (UserService.isLoggedIn()) {
@@ -94,7 +108,7 @@ angular.module('viajesApp')
     $rootScope.$on('pagarPaquete', pagar);
 
     function pagar() {
-        PaqueteService.pagarPaquete($scope.idPaquete).then(function(){
+        PaqueteService.pagarPaquete($scope.idPaquete, $scope.nombrePaquete).then(function(){
             $scope.pagoExitoso = true;
             // initialize();
         });

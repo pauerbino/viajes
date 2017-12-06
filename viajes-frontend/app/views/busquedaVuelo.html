@@ -74,8 +74,8 @@
              <img class="img-rounded" ng-src="{{vuelo.aerolinea.url}}" alt="Image not found">
         </div>
         <div class="col-xs-6">
-            <h4><span class="bold">Salida:</span> {{vuelo.fechaSalida| date:'medium'}} - {{vuelo.ciudadOrigen.nombre}}</h4>
-            <h4><span class="bold">Llegada:</span> {{vuelo.fechaLlegada| date:'medium'}} - {{vuelo.ciudadDestino.nombre}}</h4>
+            <h5><span class="bold">Salida:</span> {{vuelo.fechaSalida| date:'medium'}} - {{vuelo.ciudadOrigen.nombre}}</h5>
+            <h5><span class="bold">Llegada:</span> {{vuelo.fechaLlegada| date:'medium'}} - {{vuelo.ciudadDestino.nombre}}</h5>
             <div>{{vuelo.aerolinea.name}}</div>
             <p class="disponibilidad"> Quedan disponibles {{vuelo.cantPasajerosDisp}} de {{vuelo.cantPasajeros}} asientos</p>
 
@@ -88,7 +88,7 @@
             </div>
 
             <button class="btn btn-info btn-form" ng-click="agregarAlCarrito(vuelo)" ng-show="!vuelo.enCarrito"> Agregar al Carrito </button>
-            <p class="font" ng-show="vuelo.enCarrito">Ha sido reservado!</p>
+            <p class="bold" ng-show="vuelo.enCarrito">Ha sido reservado!</p>
         </div>
         <hr/>
     </div>

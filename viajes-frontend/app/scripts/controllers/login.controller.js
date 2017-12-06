@@ -19,4 +19,8 @@ angular.module('viajesApp')
         }
     };
 
+    $scope.signin = function() {
+      $location.path('/signin');
+    };
+
   }]);

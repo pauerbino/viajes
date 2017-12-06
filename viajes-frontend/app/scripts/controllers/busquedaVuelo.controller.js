@@ -32,7 +32,7 @@ angular.module('viajesApp')
         VueloService.reset();
         if (($scope.busqueda.origen) && ($scope.busqueda.destino) &&($scope.busqueda.fecha)){
             var fecha = $filter('date')($scope.busqueda.fecha, "dd-MM-yyyy");
-            if ($scope.busqueda.aerolinea == null) {
+            if (!$scope.busqueda.aerolinea) {
                 aerolineaId = 99;
             }
             else {

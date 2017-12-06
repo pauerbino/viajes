@@ -7,13 +7,13 @@ var Hotel = require('../model/hotelModel.js');
 
 router.get('/:destino/:estrellas', function(req, res, next) {
     if (req.params.estrellas === "99") {
-    	Hotel.find({"ciudad": req.params.destino}).exec(function (err, response) {
+    	Hotel.find({"ciudad": req.params.destino, "cantidadHabitacionesDisponibles": {$gt: 0}}).exec(function (err, response) {
         	if (err) return next(err);
         	res.json(response);
     	});
     }
     else{ 
-    	Hotel.find({"estrellas": req.params.estrellas, "ciudad": req.params.destino}).exec(function (err, response) {
+    	Hotel.find({"estrellas": req.params.estrellas, "ciudad": req.params.destino, "cantidadHabitacionesDisponibles": {$gt: 0}}).exec(function (err, response) {
 	        if (err) return next(err);
 	        res.json(response);
 	    });

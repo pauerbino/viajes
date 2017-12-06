@@ -65,6 +65,11 @@ angular
         controller: 'MiPaqueteCtrl',
         controllerAs: 'vm'
     })
+    .when('/usuarios', {
+        templateUrl: 'views/usuarios.html',
+        controller: 'UsuariosCtrl',
+        controllerAs: 'vm'
+    })
     .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',

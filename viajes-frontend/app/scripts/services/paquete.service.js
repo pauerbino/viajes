@@ -130,12 +130,12 @@ angular.module('viajesApp')
             return deferred.promise;
         };
 
-        service.pagarPaquete = function(idPaquete) {
+        service.pagarPaquete = function(idPaquete, nombrePaquete) {
 
             var deferred = $q.defer();
             $http({
                 method : 'PUT',
-                url : Configuration.getConfiguration().baseURL + '/paquetes/pagar/'+idPaquete,
+                url : Configuration.getConfiguration().baseURL + '/paquetes/pagar/' + idPaquete + '/' + nombrePaquete,
                 data: {}
             }).then(function(response) {
                 deferred.resolve(response);

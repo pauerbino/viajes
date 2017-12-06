@@ -35,17 +35,19 @@
             </div>
             <div class="row">
                 <div class="col-xs-6">
-                    <div class="form-group" ng-class="{'has-error':busquedaHotelForm.fechaIngreso.$invalid && busquedaHotelForm.$submitted}">
+                    <div class="form-group" ng-class="{'has-error':(busquedaHotelForm.fechaIngreso.$invalid && busquedaHotelForm.$submitted) || errorMessage}">
                         <label for="fechaIngreso"> Fecha Ingreso *</label>
                         <input type="date" class="form-control" name="fechaIngreso" min="{{currentDate | date: 'yyyy-MM-dd'}}" ng-model="busqueda.fechaIngreso" required>
                         <p ng-show="busquedaHotelForm.fechaIngreso.$invalid && busquedaHotelForm.$submitted" class="help-block">Debe indicar la fecha de ingreso al hotel, la cual debe ser superior al día de hoy.</p>
+                        <p ng-show="errorMessage" class="help-block">La fecha de ingreso debe ser anterior a la fecha de salida.</p>
                     </div>
                 </div>
                 <div class="col-xs-6">
-                    <div class="form-group" ng-class="{'has-error':busquedaHotelForm.fechaSalida.$invalid && busquedaHotelForm.$submitted}">
+                    <div class="form-group" ng-class="{'has-error':(busquedaHotelForm.fechaSalida.$invalid && busquedaHotelForm.$submitted) || errorMessage}">
                         <label for="fechaSalida"> Fecha Salida *</label>
                         <input type="date" class="form-control" name="fechaSalida" min="{{currentDate | date: 'yyyy-MM-dd'}}" ng-model="busqueda.fechaSalida" required>
                         <p ng-show="busquedaHotelForm.fechaSalida.$invalid && busquedaHotelForm.$submitted" class="help-block">Debe indicar la fecha de salida del hotel, la cual debe ser superior al día de hoy.</p>
+                        <p ng-show="errorMessage" class="help-block">La fecha de salida debe ser mayor a la fecha de salida.</p>
                     </div>
                 </div>
             </div>
@@ -75,11 +77,11 @@
         <div class="col-xs-3 align-center">
             <div class="precio-container">
                 <div>Por sólo</div>
-                <div class="precio-font">${{hotel.monto | currency:'$':2}}</div>
+                <div class="precio-font">{{hotel.monto | currency:'$':2}}</div>
                 <div> por noche</div>
             </div>
             <button class="btn btn-info btn-form" ng-click="agregarAlCarrito(hotel)" ng-show="!hotel.enCarrito"> Agregar al Carrito </button>
-            <p class="font" ng-show="hotel.enCarrito">Ha sido reservado!</p>
+            <p class="bold" ng-show="hotel.enCarrito">Ha sido reservado!</p>
         </div>
         <hr/>
     </div>
