@@ -13,8 +13,8 @@ angular.module('viajesApp')
         if ($scope.loginForm.$valid) {
             UserService.login($scope.credentials).then(function(){
               $location.path('/lists');
-            }).catch(function(res){
-                $scope.error = "El usuario o la contraseña no son validos. Por favor intentar nuevamente."
+            }).catch(function(){
+                $scope.error = "El usuario o la contraseña no son validos. Por favor intentar nuevamente.";
             });
         }
     };

@@ -10,7 +10,7 @@ angular.module('viajesApp')
     $scope.idPaquete = $routeParams.idPaquete;
     $scope.paquete = null;
     $scope.currentDate = new Date();
-    $scope.opcionEstrellas = [ { id:99, name: ''}, { id:1, name: '1'},{ id:2, name: '2'},{ id:3, name: '3'},{ id:4, name: '4'},{ id:5, name: '5'}]
+    $scope.opcionEstrellas = [ { id:99, name: ''}, { id:1, name: '1'},{ id:2, name: '2'},{ id:3, name: '3'},{ id:4, name: '4'},{ id:5, name: '5'}];
     $scope.busqueda.estrellas =  $scope.opcionEstrellas[0];
     $scope.errorMessage = false;
 

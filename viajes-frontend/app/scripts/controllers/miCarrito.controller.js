@@ -112,7 +112,7 @@ angular.module('viajesApp')
             $scope.pagoExitoso = true;
             // initialize();
         });
-    };
+    }
 
 
   }]);

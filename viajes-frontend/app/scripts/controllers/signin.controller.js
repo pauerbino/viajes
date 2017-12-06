@@ -8,11 +8,13 @@ angular.module('viajesApp')
       password : ""
     };
 
-    $scope.error;
+    $scope.error = "";
 
     function initialize() {
       $scope.error = "";
     }
+
+    initialize();
 
     $scope.register = function() {
         if ($scope.signinForm.$valid) {
