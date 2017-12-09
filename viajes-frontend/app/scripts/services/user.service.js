@@ -61,6 +61,36 @@ angular.module('viajesApp')
             return deferred.promise;
         };
 
+        service.getUsers = function() {
+            var deferred = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: Configuration.getConfiguration().baseURL + '/users',
+            }).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response);
+            });
+
+            return deferred.promise;
+        };
+
+        service.deleteUser = function(idUser) {
+            console.log("Se borrara el usuario");
+            var deferred = $q.defer();
+            $http({
+                 method : 'DELETE',
+                 url : Configuration.getConfiguration().baseURL + '/users/' + idUser 
+            }).then(function(response) {
+                 deferred.resolve(response.data);
+            }).catch(function(response) {
+                 deferred.reject(response);
+            });
+
+            return deferred.promise;
+        };
+
         service.login = function(user) {
             var deferred = $q.defer();
 

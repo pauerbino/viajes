@@ -17,9 +17,11 @@ var sendJSONresponse = function(res, status, content) {
 router.get('/', function(req, res, next) {
     User.find(function (err, users) {
         if (err) return next(err);
+        console.log(users);
         res.json(users);
     });
 });
+
 
 //View my profile
 router.get('/:id', function(req, res, next) { 
@@ -70,6 +72,14 @@ router.post('/', function(req, res, next) {
     }
   })(req, res);
 
+});
+
+router.delete('/:idUsuario', function(req, res, next) {
+    console.log(req.params.idUsuario);
+    User.findByIdAndRemove(req.params.idUsuario, req.body, function (err, post) {
+        if (err) return next(err);
+        res.json(post);
+    });
 });
 
 module.exports = router;

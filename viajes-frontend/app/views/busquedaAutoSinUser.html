@@ -40,17 +40,19 @@
             </div>
             <div class="row">
                 <div class="col-xs-6">
-                    <div class="form-group" ng-class="{'has-error':busquedaAutoForm.fechaRetiro.$invalid && busquedaAutoForm.$submitted}">
+                    <div class="form-group" ng-class="{'has-error':(busquedaAutoForm.fechaRetiro.$invalid && busquedaAutoForm.$submitted) || errorMessage}">
                         <label for="fechaRetiro"> Fecha de Retiro *</label>
                         <input type="date" class="form-control" name="fechaRetiro" min="{{currentDate | date: 'yyyy-MM-dd'}}" ng-model="busqueda.fechaRetiro" required>
                         <p ng-show="busquedaAutoForm.fechaRetiro.$invalid && busquedaAutoForm.$submitted" class="help-block">Debe indicar la fecha de retiro del vehículo, la cual debe ser superior al día de hoy.</p>
+                        <p ng-show="errorMessage" class="help-block">La fecha de retiro del vehículo debe ser anterior o igual a la fecha de devolución.</p>
                     </div>
                 </div>
                 <div class="col-xs-6">
-                    <div class="form-group" ng-class="{'has-error':busquedaAutoForm.fechaDevolucion.$invalid && busquedaAutoForm.$submitted}">
+                    <div class="form-group" ng-class="{'has-error':(busquedaAutoForm.fechaDevolucion.$invalid && busquedaAutoForm.$submitted) || errorMessage}">
                         <label for="fechaDevolucion"> Fecha de Devolución *</label>
                         <input type="date" class="form-control" name="fechaDevolucion" min="{{currentDate | date: 'yyyy-MM-dd'}}" ng-model="busqueda.fechaDevolucion" required>
                         <p ng-show="busquedaAutoForm.fechaDevolucion.$invalid && busquedaAutoForm.$submitted" class="help-block">Debe indicar la fecha de devolución del vehículo, la cual debe ser superior al día de hoy.</p>
+                        <p ng-show="errorMessage" class="help-block">La fecha de devolución del vehículo debe ser mayor o igual a la fecha de retiro.</p>
                     </div>
                 </div>
             </div>
@@ -65,7 +67,8 @@
     </div>
 </div>
 <div class="resultado-container">
-    <h4 class="font" style="margin-bottom: 30px;"> Resultados ({{resultadoBusqueda.length}})</h4>
+    <h4 class="font" style="margin-bottom: 30px;" ng-show="resultadoBusqueda.length > 0"> Resultados ({{resultadoBusqueda.length}})</h4>
+    <h4 class="bold" style="text-align: center;" ng-show="enBusqueda && (resultadoBusqueda.length === 0)"> No se han encontrado vehiculos para las fechas ingresadas.</h4>
     <div class="row resultado-single" ng-repeat="auto in resultadoBusqueda">
         <div class="thumbnail col-xs-3">
              <img class="img-rounded" ng-src="{{auto.url}}" alt="Image not found">

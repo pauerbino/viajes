@@ -8,7 +8,8 @@ var PaqueteSchema = Schema({
     reservaVuelo : [{ type: Schema.Types.ObjectId, ref: 'ReservaVuelo' }],
     pagado: {type : Boolean, default: false},
     montoTotal: {type: Number, default: 0},
-    fechaPago: {type: Date} 
+    fechaPago: {type: Date},
+    nombre: {type : String, default: 'Mi paquete'}
 });
 
 var Paquete = mongoose.model('Paquete', PaqueteSchema );

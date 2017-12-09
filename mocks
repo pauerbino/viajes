@@ -1,6 +1,8 @@
 Ciudades:
 db.ciudads.insertMany([{nombre:"Paris", pais:"Francia"},{nombre:"Roma", pais:"Italia"},{nombre:"Buenos Aires", pais:"Argentina"},{nombre:"Lima", pais:"Peru"},{nombre:"Miami", pais:"Estados Unidos"},{nombre:"San Pablo", pais:"Brasil"},{nombre:"Madrid", pais:"España"}])
 
+db.ciudads.insertMany([{nombre:"Nueva York", pais:"Estados Unidos"},{nombre:"Montevideo", pais:"Uruguay"},{nombre:"Boston", pais:"Estados Unidos"},{nombre:"Lima", pais:"Peru"},{nombre:"Miami", pais:"Estados Unidos"},{nombre:"San Pablo", pais:"Brasil"},{nombre:"Madrid", pais:"España"}])
+
 Agencia:
 db.agencias.insertMany([{nombre:"MundoAuto", ciudadSucursales:[ObjectId("5a270016f3c67cb8dee3a749"),ObjectId("5a270016f3c67cb8dee3a746"), ObjectId("5a270016f3c67cb8dee3a74c")]},{nombre:"EuroAutos", ciudadSucursales:[ObjectId("5a270016f3c67cb8dee3a748"),ObjectId("5a270016f3c67cb8dee3a749"), ObjectId("5a270016f3c67cb8dee3a74a"), ObjectId("5a270016f3c67cb8dee3a74b")]}]);
 
@@ -64,6 +66,26 @@ Este cambio hace que "cantidadTotal y cantidadDisponible" no tengan que ir mas..
     * que coincidan las estrellas
 
 
+<<<<<<< HEAD
+
+
+
+bower install eonasdan-bootstrap-datetimepicker#latest --save
+- Indicar que el carrito fue pagado con exito y sacar el boton de pagado ----- LISTO
+- Poner bien el monto total a pagar del carrito ----- LISTO
+- Poner el "ha sido agregado al carrito" en vuelos y autos ----- LISTO
+- Corregir que la aerolinea no sea required ----- LISTO
+- Te parece poner un "Ir a mi carrito" luego de buscar hoteles? tipo flechas ---- QUE LA BUSQUEDA SEA CIRCULAR.
+- Ver lo de body y html 100%
+- nomre de "Mi paquete" que sea editable ---- JOAQUIN.
+- fecha de ingreso y salida, y tambien de reitro yd evolucion que NO muestre horarios.
+- castear el precio para que en vez de 13500 quede 13.500
+- Validar no poder elegir fechas pasadas
+
+
+
+
+=======
 - LISTO --> Te parece poner un "Ir a mi carrito" luego de buscar hoteles? tipo flechas ---- QUE LA BUSQUEDA SEA CIRCULAR.
 - LISTO --> Ver lo de body y html 100%
 - nomre de "Mi paquete" que sea editable ---- JOAQUIN.
@@ -74,3 +96,25 @@ Este cambio hace que "cantidadTotal y cantidadDisponible" no tengan que ir mas..
 - Cambiar hotel por alojamiento
 - LISTO -->Dropdown a estrellas
 - Validar fecha end y fecha start
+>>>>>>> 5e841f7ce08aabfff1e9d0124e67a60c5518e73e
+
+
+
+
+db.ciudads.insertMany([{nombre:"Nueva York", pais:"Estados Unidos"},{nombre:"Montevideo", pais:"Uruguay"},{nombre:"Boston", pais:"Estados Unidos"}])
+
+
+db.vuelos.insertMany([{aerolinea: ObjectId("5a19c52220be50e4e6da6f96"), ciudadOrigen: ObjectId("5a19924520be50e4e6da6f6a"), ciudadDestino: ObjectId("5a281f40f20b85adc7dbb70b"), fechaSalida: new Date ("2017-12-24T21:15:00Z"), fechaLlegada: new Date ("2017-12-25T06:12:00Z"), cantPasajeros: 300, cantPasajerosDisp: 178, precio: 18753},{aerolinea: ObjectId("5a19c52220be50e4e6da6f96"), ciudadOrigen: ObjectId("5a19924520be50e4e6da6f6a"), ciudadDestino: ObjectId("5a19924520be50e4e6da6f68"), fechaSalida: new Date ("2017-12-23T05:05:00Z"), fechaLlegada: new Date ("2017-12-24T16:24:00Z"), cantPasajeros: 180, cantPasajerosDisp: 98, precio: 14783},{aerolinea: ObjectId("5a19c52220be50e4e6da6f91"), ciudadOrigen: ObjectId("5a19924520be50e4e6da6f6a"), ciudadDestino: ObjectId("5a19924520be50e4e6da6f68"), fechaSalida: new Date ("2017-12-23T23:01:00Z"), fechaLlegada: new Date ("2017-12-24T19:03:00Z"), cantPasajeros: 278, cantPasajerosDisp: 56, precio: 13780}])
+
+db.hotels.insertMany([{nombre: "Ritz Carlton New York", direccion: "1st Avenue 987", estrellas: 5, cantidadHabitacionesDisponibles:120, cantidadHabitaciones:324, monto:5729, ciudad:ObjectId("5a281f40f20b85adc7dbb70b"), url:"https://s-ec.bstatic.com/images/hotel/max1024x768/317/31789094.jpg"},
+{nombre: "The New York Hostel", direccion: "5th Aveneu", estrellas: 3, cantidadHabitacionesDisponibles:60, cantidadHabitaciones:95, monto:1533, ciudad:ObjectId("5a281f40f20b85adc7dbb70b"), url:"https://t-ec.bstatic.com/images/hotel/max1024x768/130/13011414.jpg"},
+{nombre: "After Hotel", direccion: "Montevideo 127", estrellas: 4, cantidadHabitacionesDisponibles:23, cantidadHabitaciones:47, monto:1025, ciudad:ObjectId("5a281f40f20b85adc7dbb70c"), url:"https://media-cdn.tripadvisor.com/media/photo-s/0d/cf/d9/37/after-hotel-montevideo.jpg"},
+{nombre: "Boston Hotel & Apartments", direccion: "Main Avenue 5232", estrellas: 4, cantidadHabitacionesDisponibles:2, cantidadHabitaciones:120, monto:1780, ciudad:ObjectId("5a281f40f20b85adc7dbb70d"), url:"https://media-cdn.tripadvisor.com/media/photo-s/0e/27/c7/54/loews-boston-hotel.jpg"},
+ {nombre: "Hilton Hotel", direccion: "Lincoln First Road 521", estrellas: 5, cantidadHabitacionesDisponibles:10, cantidadHabitaciones:88, monto:3920, ciudad:ObjectId("5a281f40f20b85adc7dbb70d"), url:"http://www3.hilton.com/resources/media/hi/BOSLHHH/en_US/img/shared/full_page_image_gallery/main/HH_ext01_2_1270x560_FitToBoxSmallDimension_UpperCenter.jpg"}])
+
+db.hotels.insertMany([{nombre: "Roma Hotel", direccion: "Avenida Francisco 4217", estrellas: 4, cantidadHabitacionesDisponibles:1, cantidadHabitaciones:322, monto:2083, ciudad:ObjectId("5a19924520be50e4e6da6f69"), url:"http://farm3.static.flickr.com/2517/4079626018_f1359ebd11.jpg"}, {nombre: "Marriot San Pablo", direccion: "Avenida Principal 152", estrellas: 3, cantidadHabitacionesDisponibles:3, cantidadHabitaciones:73, monto:1204, ciudad:ObjectId("5a19924520be50e4e6da6f6d"), url:"http://cache.marriott.com/propertyimages/s/saoap/saoap_main01.jpg"}])
+
+
+db.agencias.insert({nombre:"El Alamo", ciudadSucursales:[ObjectId("5a281f40f20b85adc7dbb70d"),ObjectId("5a281f40f20b85adc7dbb70c"), ObjectId("5a19924520be50e4e6da6f69"), ObjectId("5a281f40f20b85adc7dbb70b"), ObjectId("5a19924520be50e4e6da6f6a"), ObjectId("5a19924520be50e4e6da6f6d")]});
+
+db.autos.insertMany([{marca: "Chevrolet", modelo: "Vectra", fechasReservadas: ["01/12/2017","02/12/2017","03/12/2017"], monto:1500, agencia:ObjectId("5a283f34afd8aadc510489b7"), url:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Opel_Vectra_C_2.2_Direkt_front.JPG/1200px-Opel_Vectra_C_2.2_Direkt_front.JPG"},{marca: "Peugeot", modelo: "206", fechasReservadas: ["05/01/2018", "06/01/2018","07/01/2018","29/01/2018"], monto:749, agencia:ObjectId("5a283f34afd8aadc510489b7"), url:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/2001-2003_Peugeot_206_%28T1%29_GTi_3-door_hatchback_01.jpg/1200px-2001-2003_Peugeot_206_%28T1%29_GTi_3-door_hatchback_01.jpg"},{marca: "Volkswagen", modelo: "Scirocco", fechasReservadas: [], monto:3509, agencia:ObjectId("5a283f34afd8aadc510489b7"), url:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/VW_Scirocco_III_2.0_TSI_front_20100410.jpg/1200px-VW_Scirocco_III_2.0_TSI_front_20100410.jpg"},{marca: "Volkswagen", modelo: "Gol Power", fechasReservadas: ["14/12/2017","15/12/2017","28/01/2018","29/01/2018","30/01/2018"], monto:394, agencia:ObjectId("5a283f34afd8aadc510489b7"), url:"https://http2.mlstatic.com/vw-gol-power-trendline-16-5ptas-D_NQ_NP_123325-MLA25419152684_032017-F.jpg"}])

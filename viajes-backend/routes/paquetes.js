@@ -215,13 +215,14 @@ router.post('/ReservaAuto', function(req, res, next) {
 //     });
 // });
 
-router.put('/pagar/:id', function(req, res, next) {
+router.put('/pagar/:id/:nombrePaquete', function(req, res, next) {
     Paquete.findById(req.params.id).populate('reservaVuelo reservaHotel reservaAuto').exec(function(err, paquete) {
         console.log(paquete);
         var fecha;
         var fechasReservadas;
         var fechaComienzo;
         var fechaFin;
+        console.log("Se empiezan a gurdar reservas");
         for (var i = 0; i < paquete.reservaAuto.length; i++) {
             fechaComienzo = paquete.reservaAuto[i].fechaRetiro;
             fechaFin = paquete.reservaAuto[i].fechaDevolucion;
@@ -238,6 +239,7 @@ router.put('/pagar/:id', function(req, res, next) {
                 });
             });
         }
+        console.log("se guardo reserva auto");
 
         for (var i = 0; i < paquete.reservaVuelo.length; i++) {
             Vuelo.findById(paquete.reservaVuelo[i].vuelo).exec(function(err, vuelo) {
@@ -247,6 +249,7 @@ router.put('/pagar/:id', function(req, res, next) {
                 });
             });
         }
+        console.log("se guardo reserva vuelo");
 
         for (var i = 0; i < paquete.reservaHotel.length; i++) {
             Hotel.findById(paquete.reservaHotel[i].hotel).exec(function(err, hotel) {
@@ -256,10 +259,14 @@ router.put('/pagar/:id', function(req, res, next) {
                 });
             });
         }
+        console.log("se guardo reserva hotel");
 
         if (err) return next(err);
         paquete.pagado = true;
         paquete.fechaPago = new Date();
+        paquete.nombre = req.params.nombrePaquete;
+        console.log("hasta aca ok. se guarda paquete");
+        console.log(paquete);
         paquete.save(function(err) {
             if (err) throw err;
             res.json(paquete);
