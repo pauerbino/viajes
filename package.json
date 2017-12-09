@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "grunt",
+    "start": "./viajes-frontend/grunt serve",
 	"test": "grunt test",
 	"postinstall": "bower install --config.interactive=false"
   },
