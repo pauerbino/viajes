@@ -8,6 +8,7 @@ angular.module('viajesApp')
     $scope.resultadoBusqueda = [];
     $scope.currentDate = new Date();
     $scope.errorMessage = false;
+    $scope.enBusqueda = false;
 
     function initialize() {
         CiudadService.getCiudades().then(function(response){
@@ -31,6 +32,7 @@ angular.module('viajesApp')
                 var fechaDevolucion = $filter('date')($scope.busqueda.fechaDevolucion, "dd-MM-yyyy");
                 AutoService.getAutos($scope.busqueda.lugarRetiro._id, $scope.busqueda.lugarDevolucion._id, fechaRetiro, fechaDevolucion).then(function(response){
                     $scope.resultadoBusqueda = response;
+                    $scope.enBusqueda = true;
                 });
             }
             else {

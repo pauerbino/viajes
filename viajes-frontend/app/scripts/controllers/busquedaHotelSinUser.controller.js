@@ -10,6 +10,7 @@ angular.module('viajesApp')
     $scope.opcionEstrellas = [ { id:99, name: ''}, { id:1, name: '1'},{ id:2, name: '2'},{ id:3, name: '3'},{ id:4, name: '4'},{ id:5, name: '5'}];
     $scope.busqueda.estrellas =  $scope.opcionEstrellas[0];
     $scope.errorMessage = false;
+    $scope.enBusqueda = false;
 
     function initialize() {
         CiudadService.getCiudades().then(function(response){
@@ -33,6 +34,7 @@ angular.module('viajesApp')
                 var estrellas =  ($scope.busqueda.estrellas)? $scope.busqueda.estrellas.id:99;
                 HotelService.getHoteles($scope.busqueda.destino._id,estrellas).then(function(response){
                     $scope.resultadoBusqueda = response;
+                    $scope.enBusqueda = true;
                 });
             }
             else {

@@ -120,17 +120,19 @@
 </div>
 <script>
     $( document ).ready(function() {
-         var pay = window.localStorage['montoPaquete'];
-         console.log(pay);
-
+            // if ()
+            var pay = '1.00';
+            // if (window.data) {
+            //     pay = window.data.toString();
+            // }
+         // var pay = window.localStorage['montoPaquete'].toString();
+         // console.log(pay);
          paypal.Button.render({
-
             env: 'sandbox',
             client: {
                 sandbox:    'AaexcTf1YLaokQ0wVax2oAbvlsvt2AucEXajnNkS5zzBb1Lb-HNaPIOLVf_jmqgxIY9S64z7l32-yRBa',
                 production: 'xxxxxxxxx'
             },
-
             commit: true, // Show a 'Pay Now' button
             payment: function(data, actions) {
                 return actions.payment.create({
@@ -143,14 +145,11 @@
                     }
                 });
             },
-
             onAuthorize: function(data, actions) {
                 return actions.payment.execute().then(function(payment) {
                     angular.element(document.getElementById('js-navbar-collapse')).scope().pagarPaquete();
                 });
             }
-
         }, '#paypal-button');
     });
-
 </script>

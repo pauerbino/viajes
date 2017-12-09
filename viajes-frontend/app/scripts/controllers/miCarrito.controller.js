@@ -25,7 +25,7 @@ angular.module('viajesApp')
                 $scope.paquete = response;
                 $scope.idPaquete = $scope.paquete._id;
                 window.localStorage['montoPaquete'] = $scope.paquete.montoTotal;
-                //window.data = $scope.paquete.montoTotal;
+                window.data = $scope.paquete.montoTotal;
             });
         }
         else {

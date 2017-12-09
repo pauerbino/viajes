@@ -10,6 +10,7 @@ angular.module('viajesApp')
     $scope.resultadoBusqueda = [];
     $scope.idPaquete = $routeParams.idPaquete;
     $scope.currentDate = new Date();
+    $scope.enBusqueda = false;
 
     function initialize() {
         CiudadService.getCiudades().then(function(response){
@@ -38,9 +39,11 @@ angular.module('viajesApp')
             else {
                 aerolineaId = $scope.busqueda.aerolinea._id;
             }
+            console.log(aerolineaId);
             VueloService.getVuelos($scope.busqueda.origen._id, $scope.busqueda.destino._id, fecha, aerolineaId).then(function(response){
                 for (var i = 0; i < response.length; i++) {
                     response[i].enCarrito = false;
+                    $scope.enBusqueda = true;
                 }
                 console.log(response);
                 $scope.resultadoBusqueda = response;

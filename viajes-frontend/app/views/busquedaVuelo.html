@@ -68,7 +68,8 @@
     </div>
 </div>
 <div class="resultado-container">
-    <h4 class="font" style="margin-bottom: 30px;"> Resultados ({{resultadoBusqueda.length}})</h4>
+    <h4 class="font" style="margin-bottom: 30px;" ng-show="resultadoBusqueda.length > 0"> Resultados ({{resultadoBusqueda.length}})</h4>
+    <h4 class="bold" style="text-align: center;" ng-show="enBusqueda && (resultadoBusqueda.length === 0)"> No se han encontrado vuelos para la fecha ingresada.</h4>
     <div class="row resultado-single" ng-repeat="vuelo in resultadoBusqueda">
         <div class="thumbnail col-xs-3">
              <img class="img-rounded" ng-src="{{vuelo.aerolinea.url}}" alt="Image not found">
@@ -84,7 +85,6 @@
             <div class="precio-container">
                 <div>Por sólo</div>
                 <div class="precio-font">{{vuelo.precio | currency:'$':2}}</div>
-                <div> por día</div>
             </div>
 
             <button class="btn btn-info btn-form" ng-click="agregarAlCarrito(vuelo)" ng-show="!vuelo.enCarrito"> Agregar al Carrito </button>

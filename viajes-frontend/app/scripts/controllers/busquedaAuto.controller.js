@@ -10,6 +10,7 @@ angular.module('viajesApp')
     $scope.idPaquete = $routeParams.idPaquete;
     $scope.currentDate = new Date();
     $scope.errorMessage = false;
+    $scope.enBusqueda = false;
 
     function initialize() {
         CiudadService.getCiudades().then(function(response){
@@ -36,6 +37,7 @@ angular.module('viajesApp')
                         response[i].enCarrito = false;
                     }
                     $scope.resultadoBusqueda = response;
+                    $scope.enBusqueda = true;
                 });
             }
             else {
