@@ -5,7 +5,7 @@
   "scripts": {
     "start": "grunt",
 	"test": "grunt test",
-	"postinstall": "./viajes-frontend/grunt serve && ./viajes-backend/npm start"
+	"postinstall": "bower install --config.interactive=false"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
