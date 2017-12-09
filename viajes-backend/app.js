@@ -11,7 +11,11 @@ const cors = require('cors');
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://localhost:27017/viajes', {useMongoClient: true})
+//mongoose.connect('mongodb://localhost:27017/viajes', {useMongoClient: true})
+//  .then(() =>  console.log('connection successful'))
+//  .catch((err) => console.error(err));
+
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/viajes', {useMongoClient: true})
   .then(() =>  console.log('connection successful'))
   .catch((err) => console.error(err));
 
