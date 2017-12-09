@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "./viajes-frontend/grunt serve",
+    "start": "grunt",
 	"test": "grunt test",
-	"postinstall": "bower install --config.interactive=false"
+	"postinstall": "npm install grunt cli && bower install --config.interactive=false"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
