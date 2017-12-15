@@ -5,7 +5,7 @@
   "scripts": {
     "start": "grunt serve",
 	"test": "grunt test",
-	"postinstall": "npm install grunt-cli && bower install --config.interactive=false"
+	"postinstall": "npm install && npm install -g grunt-cli && bower install --config.interactive=false"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
